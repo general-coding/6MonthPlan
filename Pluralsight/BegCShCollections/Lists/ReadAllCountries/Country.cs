@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BegCShCollections.TopTenPops
+namespace BegCShCollections.Lists.ReadAllCountries
 {
     public class Country
     {

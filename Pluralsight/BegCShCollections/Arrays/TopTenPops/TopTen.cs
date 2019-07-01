@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BegCShCollections.TopTenPops
+namespace BegCShCollections.Arrays.TopTenPops
 {
     public class TopTen
     {
@@ -13,7 +13,7 @@ namespace BegCShCollections.TopTenPops
         /// </summary>
         public void Data()
         {
-            string filePath = "../../TopTenPops/Pop by Largest Final.csv";
+            string filePath = "../../Arrays/TopTenPops/Pop by Largest Final.csv";
 
             CsvReader reader = new CsvReader(filePath);
 

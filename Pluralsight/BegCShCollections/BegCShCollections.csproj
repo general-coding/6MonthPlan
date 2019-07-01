@@ -42,19 +42,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DaysOfWeekReplaceArrayItems.cs" />
-    <Compile Include="DaysOfWeek.cs" />
-    <Compile Include="NthDay.cs" />
+    <Compile Include="Arrays\DaysOfWeekReplaceArrayItems.cs" />
+    <Compile Include="Arrays\DaysOfWeek.cs" />
+    <Compile Include="Arrays\NthDay.cs" />
+    <Compile Include="Lists\DaysOfWeek.cs" />
+    <Compile Include="Lists\ReadAllCountries\Country.cs" />
+    <Compile Include="Lists\ReadAllCountries\CsvReader.cs" />
+    <Compile Include="Lists\ReadAllCountries\PopulationFormatter.cs" />
+    <Compile Include="Lists\ReadAllCountries\ReadAll.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TopTenPops\Country.cs" />
-    <Compile Include="TopTenPops\CsvReader.cs" />
-    <Compile Include="TopTenPops\PopulationFormatter.cs" />
-    <Compile Include="TopTenPops\TopTen.cs" />
+    <Compile Include="Arrays\TopTenPops\Country.cs" />
+    <Compile Include="Arrays\TopTenPops\CsvReader.cs" />
+    <Compile Include="Arrays\TopTenPops\PopulationFormatter.cs" />
+    <Compile Include="Arrays\TopTenPops\TopTen.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="TopTenPops\Pop by Largest Final.csv" />
+    <None Include="Arrays\TopTenPops\Pop by Largest Final.csv" />
+    <None Include="Lists\ReadAllCountries\Pop by Largest Final.csv" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

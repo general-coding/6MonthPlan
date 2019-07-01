@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BegCShCollections.TopTenPops
+namespace BegCShCollections.Arrays.TopTenPops
 {
     public class CsvReader
     {
