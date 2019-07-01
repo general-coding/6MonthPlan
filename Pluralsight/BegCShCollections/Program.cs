@@ -14,7 +14,9 @@ namespace BegCShCollections
 
             //new NthDay().Data();
 
-            new DaysOfWeekReplaceItems().Data();
+            //new DaysOfWeekReplaceArrayItems().Data();
+
+            new TopTenPops.TopTen().Data();
         }
     }
 }

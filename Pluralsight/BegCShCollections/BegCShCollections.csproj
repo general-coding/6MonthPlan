@@ -42,14 +42,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DaysOfWeekReplaceItems.cs" />
+    <Compile Include="DaysOfWeekReplaceArrayItems.cs" />
     <Compile Include="DaysOfWeek.cs" />
     <Compile Include="NthDay.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TopTenPops\Country.cs" />
+    <Compile Include="TopTenPops\CsvReader.cs" />
+    <Compile Include="TopTenPops\PopulationFormatter.cs" />
+    <Compile Include="TopTenPops\TopTen.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="TopTenPops\Pop by Largest Final.csv" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

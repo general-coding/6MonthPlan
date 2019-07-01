@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BegCShCollections
 {
-    public class DaysOfWeekReplaceItems
+    public class DaysOfWeekReplaceArrayItems
     {
         public void Data()
         {
