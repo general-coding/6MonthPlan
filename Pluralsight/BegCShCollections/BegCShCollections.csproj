@@ -45,6 +45,11 @@
     <Compile Include="Arrays\DaysOfWeekReplaceArrayItems.cs" />
     <Compile Include="Arrays\DaysOfWeek.cs" />
     <Compile Include="Arrays\NthDay.cs" />
+    <Compile Include="Dictionaries\Country.cs" />
+    <Compile Include="Dictionaries\DictSnippets.cs" />
+    <Compile Include="Dictionaries\DisplaySingleCountry\CsvReader.cs" />
+    <Compile Include="Dictionaries\DisplaySingleCountry\PopulationFormatter.cs" />
+    <Compile Include="Dictionaries\DisplaySingleCountry\ReadAll.cs" />
     <Compile Include="Lists\DaysOfWeek.cs" />
     <Compile Include="Lists\ReadAllCountries\Country.cs" />
     <Compile Include="Lists\ReadAllCountries\CsvReader.cs" />
@@ -60,7 +65,9 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="Arrays\TopTenPops\Pop by Largest Final.csv" />
+    <None Include="Dictionaries\DisplaySingleCountry\Pop by Largest Final.csv" />
     <None Include="Lists\ReadAllCountries\Pop by Largest Final.csv" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

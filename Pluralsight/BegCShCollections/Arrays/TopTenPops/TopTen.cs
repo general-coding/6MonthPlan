@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BegCShCollections.Arrays.TopTenPops
 {
@@ -25,8 +21,6 @@ namespace BegCShCollections.Arrays.TopTenPops
 
                 Console.WriteLine($"{PopulationFormatter.FormatPopulation(country.Population).PadLeft(15)}: {country.Name} ");
             }
-
-            Console.ReadLine();
         }
     }
 }

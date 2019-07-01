@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BegCShCollections.Arrays
 {
@@ -26,8 +22,6 @@ namespace BegCShCollections.Arrays
 
             string chosenDay = daysOfWeek[iDay - 1];
             Console.WriteLine($"That day is {chosenDay}");
-
-            Console.ReadLine();
         }
     }
 }

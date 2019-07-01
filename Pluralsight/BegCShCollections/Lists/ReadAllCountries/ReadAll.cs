@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BegCShCollections.Lists.ReadAllCountries
 {
@@ -17,7 +14,15 @@ namespace BegCShCollections.Lists.ReadAllCountries
 
             CsvReader reader = new CsvReader(filePath);
 
-            List<Country> countries = reader.ReadAllCountries(10);
+            List<Country> countries = reader.ReadAllCountries();
+
+            //Inserting a value at an index
+            Country lilliput = new Country("Lilliput", "LIL", "Somewhere", 2_000_000);
+            int lilliputIndex = countries.FindIndex(x => x.Population < 2_000_000);
+            countries.Insert(lilliputIndex, lilliput);
+
+            //Removing a value at an index.
+            countries.RemoveAt(lilliputIndex);
 
             foreach (Country country in countries)
             {
@@ -27,8 +32,6 @@ namespace BegCShCollections.Lists.ReadAllCountries
             }
 
             Console.WriteLine($"{countries.Count} countries.");
-
-            Console.ReadLine();
         }
     }
 }

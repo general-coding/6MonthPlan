@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace BegCShCollections.Lists.ReadAllCountries
+namespace BegCShCollections.Dictionaries.DisplaySingleCountry
 {
     public class CsvReader
     {
@@ -13,9 +13,9 @@ namespace BegCShCollections.Lists.ReadAllCountries
             this._csvFilePath = csvFilePath;
         }
 
-        public List<Country> ReadAllCountries()
+        public Dictionary<string, Country> ReadAllCountries()
         {
-            List<Country> countries = new List<Country>();
+            Dictionary<string, Country> countries = new Dictionary<string, Country>();
 
             using (StreamReader streamReader = new StreamReader(_csvFilePath))
             {
@@ -25,7 +25,8 @@ namespace BegCShCollections.Lists.ReadAllCountries
                 string csvLine;
                 while ((csvLine = streamReader.ReadLine()) != null)
                 {
-                    countries.Add(ReadCountryFromCsvLine(csvLine));
+                    Country country = ReadCountryFromCsvLine(csvLine);
+                    countries.Add(country.Code, country);
                 }
             }
 

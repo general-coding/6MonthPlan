@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BegCShCollections.Lists.ReadAllCountries
+namespace BegCShCollections.Dictionaries.DisplaySingleCountry
 {
     public class PopulationFormatter
     {

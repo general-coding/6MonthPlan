@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BegCShCollections.Arrays.TopTenPops
+﻿namespace BegCShCollections.Arrays.TopTenPops
 {
     public class Country
     {

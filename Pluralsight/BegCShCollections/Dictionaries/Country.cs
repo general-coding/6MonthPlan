@@ -1,4 +1,4 @@
-﻿namespace BegCShCollections.Lists.ReadAllCountries
+﻿namespace BegCShCollections.Dictionaries
 {
     public class Country
     {

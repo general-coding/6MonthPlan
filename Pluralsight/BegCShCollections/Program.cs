@@ -10,15 +10,21 @@ namespace BegCShCollections
     {
         static void Main(string[] args)
         {
-            //new BegCShCollections.Arrays.DaysOfWeek().Data();
+            new BegCShCollections.Arrays.DaysOfWeek().Data();
 
-            //new BegCShCollections.Arrays.NthDay().Data();
+            new BegCShCollections.Arrays.NthDay().Data();
 
-            //new BegCShCollections.Arrays.DaysOfWeekReplaceArrayItems().Data();
+            new BegCShCollections.Arrays.DaysOfWeekReplaceArrayItems().Data();
 
-            //new BegCShCollections.Arrays.TopTenPops.TopTen().Data();
+            new BegCShCollections.Arrays.TopTenPops.TopTen().Data();
 
             new BegCShCollections.Lists.ReadAllCountries.ReadAll().Data();
+
+            new BegCShCollections.Dictionaries.DictSnippets().Data();
+
+            new BegCShCollections.Dictionaries.DisplaySingleCountry.ReadAll().Data();
+
+            Console.ReadLine();
         }
     }
 }
