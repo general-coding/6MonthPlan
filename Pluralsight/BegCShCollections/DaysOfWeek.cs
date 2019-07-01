@@ -10,8 +10,6 @@ namespace BegCShCollections
     {
         static void Main(string[] args)
         {
-            string monday = "Monday";
-
             string[] daysOfWeek = {
                 "Monday"
                 , "Tuesday"
@@ -21,6 +19,11 @@ namespace BegCShCollections
                 , "Saturday"
                 , "Sunday"
             };
+
+            foreach(string day in daysOfWeek)
+            {
+                Console.WriteLine(day);
+            }
         }
     }
 }
