@@ -45,15 +45,16 @@
     <Compile Include="Arrays\DaysOfWeekReplaceArrayItems.cs" />
     <Compile Include="Arrays\DaysOfWeek.cs" />
     <Compile Include="Arrays\NthDay.cs" />
-    <Compile Include="CollectionWithinCollections\ReadAllCountries\BatchDisplayCountries.cs" />
+    <Compile Include="CollectionInterfaces\TopTenPops\Country.cs" />
+    <Compile Include="CollectionInterfaces\TopTenPops\CsvReader.cs" />
+    <Compile Include="CollectionInterfaces\TopTenPops\PopulationFormatter.cs" />
+    <Compile Include="CollectionInterfaces\TopTenPops\TopTen.cs" />
+    <Compile Include="CollectionWithinCollections\NoughtsAndCrosses\Game.cs" />
+    <Compile Include="CollectionWithinCollections\NoughtsAndCrosses\Square.cs" />
     <Compile Include="CollectionWithinCollections\ReadAllCountries\Country.cs" />
     <Compile Include="CollectionWithinCollections\ReadAllCountries\CsvReader.cs" />
-    <Compile Include="CollectionWithinCollections\ReadAllCountries\Filter.cs" />
-    <Compile Include="CollectionWithinCollections\ReadAllCountries\LINQOrderBy.cs" />
-    <Compile Include="CollectionWithinCollections\ReadAllCountries\LINQQuerySyntax.cs" />
     <Compile Include="CollectionWithinCollections\ReadAllCountries\PopulationFormatter.cs" />
-    <Compile Include="CollectionWithinCollections\ReadAllCountries\RemovingItems.cs" />
-    <Compile Include="CollectionWithinCollections\ReadAllCountries\TakeTen.cs" />
+    <Compile Include="CollectionWithinCollections\ReadAllCountries\CountriesByRegion.cs" />
     <Compile Include="Dictionaries\Country.cs" />
     <Compile Include="Dictionaries\DictSnippets.cs" />
     <Compile Include="Dictionaries\DisplaySingleCountry\CsvReader.cs" />
@@ -89,6 +90,7 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="Arrays\TopTenPops\Pop by Largest Final.csv" />
+    <None Include="CollectionInterfaces\TopTenPops\Pop by Largest Final.csv" />
     <None Include="CollectionWithinCollections\ReadAllCountries\Pop by Largest Final.csv" />
     <None Include="Dictionaries\DisplaySingleCountry\Pop by Largest Final.csv" />
     <None Include="ForLoop\ReadAllCountries\Pop by Largest Final.csv" />

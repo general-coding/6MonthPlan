@@ -32,7 +32,7 @@ namespace BegCShCollections.CollectionWithinCollections.ReadAllCountries
                     }
                     else
                     {
-                        List<Country> countriesInRegion = new List<Country>();
+                        List<Country> countriesInRegion = new List<Country>() { country };
                         countries.Add(country.Region, countriesInRegion);
                     }
                 }

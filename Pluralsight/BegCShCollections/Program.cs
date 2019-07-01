@@ -36,6 +36,14 @@ namespace BegCShCollections
 
             //new LINQ.ReadAllCountries.LINQQuerySyntax().Data();
 
+            //new CollectionWithinCollections.ReadAllCountries.CountriesByRegion().Data();
+
+            //CollectionWithinCollections.NoughtsAndCrosses.Game game = new CollectionWithinCollections.NoughtsAndCrosses.Game();
+            //game.PlayGame();
+            //Console.WriteLine("Game over");
+
+            new CollectionInterfaces.TopTenPops.TopTen().Data();
+
             Console.ReadLine();
         }
     }
