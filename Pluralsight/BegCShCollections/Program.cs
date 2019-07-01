@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BegCShCollections
 {
@@ -10,19 +6,25 @@ namespace BegCShCollections
     {
         static void Main(string[] args)
         {
-            new BegCShCollections.Arrays.DaysOfWeek().Data();
+            //new Arrays.DaysOfWeek().Data();
 
-            new BegCShCollections.Arrays.NthDay().Data();
+            //new Arrays.NthDay().Data();
 
-            new BegCShCollections.Arrays.DaysOfWeekReplaceArrayItems().Data();
+            //new Arrays.DaysOfWeekReplaceArrayItems().Data();
 
-            new BegCShCollections.Arrays.TopTenPops.TopTen().Data();
+            //new Arrays.TopTenPops.TopTen().Data();
 
-            new BegCShCollections.Lists.ReadAllCountries.ReadAll().Data();
+            //new Lists.ReadAllCountries.ReadAll().Data();
 
-            new BegCShCollections.Dictionaries.DictSnippets().Data();
+            //new Dictionaries.DictSnippets().Data();
 
-            new BegCShCollections.Dictionaries.DisplaySingleCountry.ReadAll().Data();
+            //new Dictionaries.DisplaySingleCountry.ReadAll().Data();
+
+            //new ForLoop.ReadAllCountries.ReadAll().Data();
+
+            //new ForLoop.ReadAllCountries.BatchDisplayCountries().Data();
+
+            new ForLoop.ReadAllCountries.RemovingItems().Data();
 
             Console.ReadLine();
         }
