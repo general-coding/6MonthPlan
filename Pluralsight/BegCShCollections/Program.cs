@@ -12,7 +12,9 @@ namespace BegCShCollections
         {
             //new DaysOfWeek().Data();
 
-            new NthDay().Data();
+            //new NthDay().Data();
+
+            new DaysOfWeekReplaceItems().Data();
         }
     }
 }
