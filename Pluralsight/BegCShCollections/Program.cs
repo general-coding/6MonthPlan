@@ -24,7 +24,17 @@ namespace BegCShCollections
 
             //new ForLoop.ReadAllCountries.BatchDisplayCountries().Data();
 
-            new ForLoop.ReadAllCountries.RemovingItems().Data();
+            //new ForLoop.ReadAllCountries.RemovingItems().Data();
+
+            //new LINQ.ReadAllCountries.TakeTen().Data();
+
+            //new LINQ.ReadAllCountries.LINQOrderBy().Data();
+
+            //new LINQ.ReadAllCountries.BatchDisplayCountries().Data();
+
+            //new LINQ.ReadAllCountries.Filter().Data();
+
+            //new LINQ.ReadAllCountries.LINQQuerySyntax().Data();
 
             Console.ReadLine();
         }
