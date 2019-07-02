@@ -1,12 +1,9 @@
-﻿using System;
+﻿using ACME.Common;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ACM.BL
 {
-    public class Product
+    public class Product : EntityBase, ILoggable
     {
         public Product()
         {
@@ -18,7 +15,7 @@ namespace ACM.BL
             ProductID = productId;
         }
 
-        public int ProductID { get; set; }
+        public int ProductID { get; private set; }
 
         public string ProductName { get; set; }
 
@@ -30,7 +27,7 @@ namespace ACM.BL
         /// Validates the product
         /// </summary>
         /// <returns></returns>
-        public bool Validate()
+        public override bool Validate()
         {
             var isValid = true;
 
@@ -40,32 +37,14 @@ namespace ACM.BL
             return isValid;
         }
 
-        /// <summary>
-        /// Retrieves one product
-        /// </summary>
-        /// <param name="productId"></param>
-        /// <returns></returns>
-        public Product Retrieve(int productId)
+        public override string ToString()
         {
-            return new Product();
+            return ProductName;
         }
 
-        /// <summary>
-        /// Retrieves all the products
-        /// </summary>
-        /// <returns></returns>
-        public List<Product> Retrieve()
+        public string Log()
         {
-            return new List<Product>();
-        }
-
-        /// <summary>
-        /// Saves the product
-        /// </summary>
-        /// <returns></returns>
-        public bool Save()
-        {
-            return true;
+            return "This is a product";
         }
     }
 }

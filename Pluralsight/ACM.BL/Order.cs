@@ -1,14 +1,12 @@
-﻿using System;
+﻿using ACME.Common;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ACM.BL
 {
-    public class Order
+    public class Order : EntityBase, ILoggable
     {
-        public Order()
+        public Order() : this(0)
         {
 
         }
@@ -16,17 +14,24 @@ namespace ACM.BL
         public Order(int orderId)
         {
             OrderId = orderId;
+            OrderItems = new List<OrderItem>();
         }
 
-        public int OrderId { get; set; }
+        public int OrderId { get; private set; }
 
         public DateTimeOffset? OrderDate { get; set; }
+
+        public int CustomerId { get; set; }
+
+        public int ShippingAddressId { get; set; }
+
+        public List<OrderItem> OrderItems { get; set; }
 
         /// <summary>
         /// Validates the order
         /// </summary>
         /// <returns></returns>
-        public bool Validate()
+        public override bool Validate()
         {
             var isValid = true;
 
@@ -35,32 +40,14 @@ namespace ACM.BL
             return isValid;
         }
 
-        /// <summary>
-        /// Retrieve one order
-        /// </summary>
-        /// <param name="orderId"></param>
-        /// <returns></returns>
-        public Order Retrieve(int orderId)
+        public override string ToString()
         {
-            return new Order();
+            return " " + OrderId;
         }
 
-        /// <summary>
-        /// Retrieves all orders
-        /// </summary>
-        /// <returns></returns>
-        public List<Order> Retrieve()
+        public string Log()
         {
-            return new List<Order>();
-        }
-
-        /// <summary>
-        /// Saves the order
-        /// </summary>
-        /// <returns></returns>
-        public bool Save()
-        {
-            return true;
+            throw new NotImplementedException();
         }
     }
 }

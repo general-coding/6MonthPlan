@@ -49,7 +49,11 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomerRepositoryTest.cs" />
     <Compile Include="CustomerTest.cs" />
+    <Compile Include="OrderRepositoryTest.cs" />
+    <Compile Include="LogginServiceTest.cs" />
+    <Compile Include="ProductRepositoryTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -59,6 +63,10 @@
     <ProjectReference Include="..\ACM.BL\ACM.BL.csproj">
       <Project>{e2a9398e-06c5-4aa7-b3d2-96aea9c0dc68}</Project>
       <Name>ACM.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ACME.Common\ACME.Common.csproj">
+      <Project>{68d19c4d-9fa1-48b5-b4b2-3202513f16a0}</Project>
+      <Name>ACME.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

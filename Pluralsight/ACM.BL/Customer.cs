@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using ACME.Common;
+using System.Collections.Generic;
 
 namespace ACM.BL
 {
-    public class Customer
+    public class Customer : EntityBase, ILoggable
     {
-        public Customer()
+        //Constructor chaining allows calling one constructor from another
+        public Customer() : this(0)
         {
 
         }
@@ -12,6 +14,7 @@ namespace ACM.BL
         public Customer(int customerId)
         {
             CustomerId = customerId;
+            AddressList = new List<Address>();
         }
 
         public static int InstanceCount { get; set; }
@@ -52,6 +55,10 @@ namespace ACM.BL
 
         public string EmailAddress { get; set; }
 
+        public List<Address> AddressList { get; set; }
+
+        public string CustomerType { get; set; }
+
         /// <summary>
         /// Validates customer data
         /// </summary>
@@ -59,7 +66,7 @@ namespace ACM.BL
         /// true if customer data is valid
         /// false if customer data is not valid
         /// </returns>
-        public bool Validate()
+        public override bool Validate()
         {
             var isValid = true;
 
@@ -69,34 +76,14 @@ namespace ACM.BL
             return isValid;
         }
 
-        /// <summary>
-        /// Retrieve a customer
-        /// </summary>
-        /// <param name="customerId"></param>
-        /// <returns>
-        /// The customer object
-        /// </returns>
-        public Customer Retrieve(int customerId)
+        public override string ToString()
         {
-            return new Customer();
+            return FullName;
         }
 
-        /// <summary>
-        /// Retrieves all the customers
-        /// </summary>
-        /// <returns></returns>
-        public List<Customer> Retrieve()
+        public string Log()
         {
-            return new List<Customer>();
-        }
-
-        /// <summary>
-        /// Saves the customer data
-        /// </summary>
-        /// <returns></returns>
-        public bool Save()
-        {
-            return true;
+            return "This is a customer";
         }
     }
 }
