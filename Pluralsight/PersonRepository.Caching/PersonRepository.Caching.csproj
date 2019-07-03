@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="IPersonReader.cs" />
+    <ProjectReference Include="..\PersonRepository.Interface\PersonRepository.Interface.csproj" />
   </ItemGroup>
 
 </Project>

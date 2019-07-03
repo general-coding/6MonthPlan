@@ -7,62 +7,58 @@ using System.Linq;
 
 namespace PersonRepository.CSV
 {
-    public class CSVRepository : IPersonReader
+    public class CSVRepository : IPersonRepository
     {
-        string path;
+        public ICSVFileLoader FileLoader { get; set; }
 
         public CSVRepository()
         {
-            var filename = ConfigurationManager.AppSettings["CSVFileName"];
-            path = AppDomain.CurrentDomain.BaseDirectory + filename;
+            string filePath = AppDomain.CurrentDomain.BaseDirectory + "People.txt";
+            FileLoader = new CSVFileLoader(filePath);
         }
 
         public IEnumerable<Person> GetPeople()
         {
-            var people = new List<Person>();
-
-            if (File.Exists(path))
-            {
-                using (var reader = new StreamReader(path))
-                {
-                    string line;
-                    while((line = reader.ReadLine()) != null)
-                    {
-                        var elements = line.Split(',');
-                        var person = new Person()
-                        {
-                            Id = Int32.Parse(elements[0]),
-                            GivenName = elements[1],
-                            FamilyName = elements[2],
-                            StartDate = DateTime.Parse(elements[3]),
-                            Rating = Int32.Parse(elements[4]),
-                            FormatString = elements[5],
-                        };
-                        people.Add(person);
-                    }
-                }
-            }
+            var fileData = FileLoader.LoadFile();
+            var people = ParseString(fileData);
             return people;
         }
 
         public Person GetPerson(int id)
         {
-            return GetPeople().FirstOrDefault(p => p.Id == id);
+            var people = GetPeople();
+            return people?.FirstOrDefault(p => p.Id == id);
         }
 
-        public void AddPerson(Person newPerson)
+        private List<Person> ParseString(string csvData)
         {
-            throw new NotImplementedException();
-        }
+            var people = new List<Person>();
 
-        public void UpdatePerson(int id, Person updatedPerson)
-        {
-            throw new NotImplementedException();
-        }
+            var lines = csvData.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
 
-        public void DeletePerson(int id)
-        {
-            throw new NotImplementedException();
+            foreach (string line in lines)
+            {
+                try
+                {
+                    var elems = line.Split(',');
+                    var per = new Person()
+                    {
+                        Id = Int32.Parse(elems[0]),
+                        GivenName = elems[1],
+                        FamilyName = elems[2],
+                        StartDate = DateTime.Parse(elems[3]),
+                        Rating = Int32.Parse(elems[4]),
+                        FormatString = elems[5],
+                    };
+                    people.Add(per);
+                }
+                catch (Exception)
+                {
+                    // Skip the bad record, log it, and move to the next record
+                    // log.write("Unable to parse record", per);
+                }
+            }
+            return people;
         }
     }
 }

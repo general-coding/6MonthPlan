@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using PeopleViewer.Presentation;
+using PersonRepository.CSV;
 using System.Windows;
 
 namespace PeopleViewer
@@ -13,5 +9,14 @@ namespace PeopleViewer
     /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+
+            var repository = new CSVRepository();
+            var viewModel = new PeopleViewModel(repository);
+
+            Application.Current.MainWindow = new MainWindow(viewModel);
+        }
     }
 }

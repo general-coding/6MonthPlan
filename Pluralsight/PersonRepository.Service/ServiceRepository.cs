@@ -6,7 +6,7 @@ using System.Net;
 
 namespace PersonRepository.Service
 {
-    public class ServiceRepository : IPersonReader
+    public class ServiceRepository : IPersonRepository
     {
         WebClient client = new WebClient();
         string baseUri = "http://localhost:9874/api/people";

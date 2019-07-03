@@ -2,7 +2,7 @@
 
 namespace PersonRepository.Interface
 {
-    public interface IPersonReader
+    public interface IPersonRepository
     {
         IEnumerable<Person> GetPeople();
         Person GetPerson(int id);
