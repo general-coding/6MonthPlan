@@ -1,11 +1,11 @@
-﻿using Interfaces.Extensibility.PersonRepository.Interface;
+﻿using PersonRepository.Interface;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
-using System.Configuration;
 
-namespace Interfaces.Extensibility.PersonRepository.CSV
+namespace PersonRepository.CSV
 {
     public class CSVRepository : IPersonRepository
     {
@@ -26,7 +26,7 @@ namespace Interfaces.Extensibility.PersonRepository.CSV
                 using (var reader = new StreamReader(path))
                 {
                     string line;
-                    while ((line = reader.ReadLine()) != null)
+                    while((line = reader.ReadLine()) != null)
                     {
                         var elements = line.Split(',');
                         var person = new Person()

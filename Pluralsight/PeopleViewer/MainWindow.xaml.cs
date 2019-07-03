@@ -1,5 +1,5 @@
-﻿using Interfaces.Extensibility.PersonRepository.Factory;
-using Interfaces.Extensibility.PersonRepository.Interface;
+﻿using PersonRepository.Factory;
+using PersonRepository.Interface;
 using System.Windows;
 
 namespace PeopleViewer
@@ -30,10 +30,12 @@ namespace PeopleViewer
         {
             ClearListBox();
 
-            IPersonRepository repository = RepositoryFactory.GetRepository();
+            IPersonRepository repository =
+                RepositoryFactory.GetRepository(repositoryType);
 
             var people = repository.GetPeople();
-            PersonListBox.ItemsSource = people;
+            foreach (var person in people)
+                PersonListBox.Items.Add(person);
 
             ShowRepositoryType(repository);
         }

@@ -1,35 +1,19 @@
-﻿using Interfaces.Extensibility.PersonRepository.CSV;
-using Interfaces.Extensibility.PersonRepository.Interface;
-using Interfaces.Extensibility.PersonRepository.Service;
-//using Interfaces.Extensibility.PersonRepository.SQL;
+﻿using Interfaces.Extensibility.PersonRepository.Interface;
+using System;
+using System.Configuration;
 
 namespace Interfaces.Extensibility.PersonRepository.Factory
 {
     public static class RepositoryFactory
     {
-        public static IPersonRepository GetRepository(string repositoryType)
+        public static IPersonRepository GetRepository()
         {
-            IPersonRepository repository = null;
+            string repositoryTypeName = ConfigurationManager.AppSettings["RepositoryType"];
+            Type repositoryType = Type.GetType(repositoryTypeName);
+            object repository = Activator.CreateInstance(repositoryType);
+            IPersonRepository personRepository = repository as IPersonRepository;
 
-            switch (repositoryType)
-            {
-                case "Service":
-                    repository = new ServiceRepository();
-                    break;
-
-                case "CSV":
-                    repository = new CSVRepository();
-                    break;
-
-                //case "SQL":
-                //    repository = new SQLRepository();
-                //    break;
-
-                default:
-                    break;
-            }
-
-            return repository;
+            return personRepository;
         }
     }
 }
