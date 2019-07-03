@@ -178,7 +178,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ServiceRepository.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -225,6 +224,10 @@
       <Project>{4D53A799-65CA-43F2-B6F8-0EEFBBDBF5A7}</Project>
       <Name>PeopleViewer.Presentation</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PersonRepository.Caching\PersonRepository.Caching.csproj">
+      <Project>{62c395ab-60ac-4f85-9f0b-c67e5cad51b5}</Project>
+      <Name>PersonRepository.Caching</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PersonRepository.CSV\PersonRepository.CSV.csproj">
       <Project>{C3FED3E3-3D00-4115-9515-B15D9BCDA2C0}</Project>
       <Name>PersonRepository.CSV</Name>
@@ -236,6 +239,10 @@
     <ProjectReference Include="..\PersonRepository.Interface\PersonRepository.Interface.csproj">
       <Project>{ef1d5215-e99b-4fe7-abc3-bd748f75780c}</Project>
       <Name>PersonRepository.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PersonRepository.Service\PersonRepository.Service.csproj">
+      <Project>{32769252-871E-4CBC-BBF5-3CEF70115C0E}</Project>
+      <Name>PersonRepository.Service</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
