@@ -1,15 +1,14 @@
-﻿using Interfaces.Common;
+﻿using Interfaces.Extensibility.PersonRepository.Interface;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
-namespace Interfaces.People.Library
+namespace Interfaces.Extensibility.People.Service.Models
 {
-    public class PersonRepository
+    public class StaticPeopleProvider : IPeopleProvider
     {
         public List<Person> GetPeople()
         {
-            var people = new List<Person>()
+            var p = new List<Person>()
             {
                 new Person() { Id=1, GivenName="John", FamilyName="Koenig",
                     StartDate = new DateTime(1975, 10, 17), Rating=6 },
@@ -31,12 +30,7 @@ namespace Interfaces.People.Library
                 new Person() { Id=9, GivenName="Isaac", FamilyName="Gampu",
                     StartDate = new DateTime(1977, 9, 10), Rating=4 },
             };
-            return people;
-        }
-
-        public Person GetPerson(int id)
-        {
-            return GetPeople().FirstOrDefault(p => p.Id == id);
+            return p;
         }
     }
 }
