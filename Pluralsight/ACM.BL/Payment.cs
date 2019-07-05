@@ -1,21 +1,39 @@
-﻿namespace ACM.BL
+﻿using System;
+using System.ComponentModel;
+
+namespace ACM.BL
 {
+    public enum PaymentType
+    {
+        CreditCard = 1,
+        PayPal = 2
+    }
+
     /// <summary>
     /// Manages a payment.
     /// </summary>
     public class Payment
     {
+        public int PaymentType { get; set; }
+
         public void ProcessPayment(Payment payment)
         {
-            // -- Process the payment --
-            // If credit card, 
-            // process the credit card payment.
-            // If PayPal, 
-            // process the PayPal payment.
-            // If there is a payment problem, notify the user.
-            // Open a connection
-            // Set stored procedure parameters with the payment data.
-            // Call the save stored procedure.
+            if (!Enum.TryParse(payment.PaymentType.ToString(), out PaymentType paymentTypeOption))
+            {
+                throw new InvalidEnumArgumentException("Payment type", payment.PaymentType, typeof(PaymentType));
+            }
+
+            switch (paymentTypeOption)
+            {
+                case BL.PaymentType.CreditCard:
+                    break;
+
+                case BL.PaymentType.PayPal:
+                    break;
+
+                default:
+                    throw new ArgumentException();
+            }
         }
     }
 }

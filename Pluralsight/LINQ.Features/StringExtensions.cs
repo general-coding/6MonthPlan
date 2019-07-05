@@ -6,6 +6,6 @@
         {
             double result = double.Parse(data);
             return result;
-        }
+        }           
     }
 }
