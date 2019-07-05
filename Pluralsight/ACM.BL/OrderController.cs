@@ -1,4 +1,5 @@
-﻿using ACME.Common;
+﻿using ACM.Common;
+using ACME.Common;
 
 namespace ACM.BL
 {
@@ -35,11 +36,14 @@ namespace ACM.BL
 
             if (emailReceipt)
             {
-                customer.ValidateEmail();
-                customerRepository.Update();
+                OperationResult operationResult = customer.ValidateEmail();
+                if (operationResult.Success)
+                {
+                    customerRepository.Update();
 
-                emailLibrary.SendEmail(customer.EmailAddress,
-                                        "Here is your receipt");
+                    emailLibrary.SendEmail(customer.EmailAddress,
+                                            "Here is your receipt");
+                }
             }
         }
     }

@@ -16,7 +16,6 @@
             // Open a connection
             // Set stored procedure parameters with the payment data.
             // Call the save stored procedure.
-
         }
     }
 }

@@ -22,7 +22,6 @@ namespace ACM.BL
             // Open a connection
             // Set stored procedure parameters with the customer data.
             // Call the save stored procedure.
-
         }
 
         public void Update()

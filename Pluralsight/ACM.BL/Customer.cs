@@ -1,4 +1,5 @@
-﻿using ACME.Common;
+﻿using ACM.Common;
+using ACME.Common;
 using System;
 using System.Collections.Generic;
 
@@ -54,8 +55,80 @@ namespace ACM.BL
             }
         }
 
-        public void ValidateEmail()
+        /// <summary>
+        /// Calculates the percent of the step goal reached.
+        /// </summary>
+        /// <param name="goalSteps"></param>
+        /// <param name="actualSteps"></param>
+        /// <returns></returns>
+        public decimal CalculatePercentOfGoalSteps(string goalSteps, string actualSteps)
         {
+            if (string.IsNullOrWhiteSpace(goalSteps))
+            {
+                throw new ArgumentException("Goal must be entered", "goalSteps");
+            }
+
+            if (string.IsNullOrWhiteSpace(actualSteps))
+            {
+                throw new ArgumentException("Actual steps count must be entered", "actualSteps");
+            }
+
+            if (!decimal.TryParse(goalSteps, out decimal goalStepCount))
+            {
+                throw new ArgumentException("Goal must be numeric", "goalSteps");
+            }
+
+            if (!decimal.TryParse(actualSteps, out decimal actualStepCount))
+            {
+                throw new ArgumentException("Actual steps must be numeric", "actualSteps");
+            }
+
+            return CalculatePercentOfGoalSteps(goalStepCount, actualStepCount);
+        }
+
+        public decimal CalculatePercentOfGoalSteps(decimal goalStepCount, decimal actualStepCount)
+        {
+            if (goalStepCount <= 0)
+            {
+                throw new ArgumentException("Goal must be greater than 0", "goalSteps");
+            }
+
+            return Math.Round(actualStepCount / goalStepCount * 100, 2);
+        }
+
+        public OperationResult ValidateEmail()
+        {
+            var op = new OperationResult();
+
+            if (string.IsNullOrWhiteSpace(EmailAddress))
+            {
+                op.Success = false;
+                op.AddMessage("Email address is null");
+            }
+
+            if (op.Success)
+            {
+                var isValidFormat = true;
+                // Code here that validates the format of the email
+                // using Regular Expressions.
+                if (!isValidFormat)
+                {
+                    op.Success = false;
+                    op.AddMessage("Email address is not in a correct format");
+                }
+            }
+
+            if (op.Success)
+            {
+                var isRealDomain = true;
+                // Code here that confirms whether domain exists.
+                if (!isRealDomain)
+                {
+                    op.Success = false;
+                    op.AddMessage("Email address does not include a valid domain");
+                }
+            }
+            return op;
         }
 
         public string EmailAddress { get; set; }

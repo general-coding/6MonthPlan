@@ -19,7 +19,6 @@ namespace ACM.BL
             // Open a connection
             // Set stored procedure parameters with the inventory data.
             // Call the save stored procedure.
-
         }
     }
 }

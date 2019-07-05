@@ -15,7 +15,6 @@ namespace ACM.BL
             // Open a connection
             // Set stored procedure parameters with the order data.
             // Call the save stored procedure.
-
         }
 
         /// <summary>

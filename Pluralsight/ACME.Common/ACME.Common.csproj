@@ -45,6 +45,7 @@
     <Compile Include="EmailLibrary.cs" />
     <Compile Include="ILoggable.cs" />
     <Compile Include="LoggingService.cs" />
+    <Compile Include="OperationResult.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
