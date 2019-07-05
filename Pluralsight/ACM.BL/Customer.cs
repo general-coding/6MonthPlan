@@ -1,4 +1,5 @@
 ﻿using ACME.Common;
+using System;
 using System.Collections.Generic;
 
 namespace ACM.BL
@@ -51,6 +52,10 @@ namespace ACM.BL
                 }
                 return fullName;
             }
+        }
+
+        public void ValidateEmail()
+        {
         }
 
         public string EmailAddress { get; set; }
