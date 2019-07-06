@@ -2,11 +2,12 @@
 
 namespace EDEH.DelegatesAndEvents
 {
-    public delegate int WorkPerformedHandler(object sender, WorkPerformedEventArgs e);
+    //public delegate int WorkPerformedHandler(object sender, WorkPerformedEventArgs e);
 
     public class Worker
     {
-        public event WorkPerformedHandler WorkPerformed;
+        //public event WorkPerformedHandler WorkPerformed;
+        public event EventHandler<WorkPerformedEventArgs> WorkPerformed;
 
         public event EventHandler WorkCompleted;
 
@@ -14,6 +15,8 @@ namespace EDEH.DelegatesAndEvents
         {
             for (int i = 0; i < hours; i++)
             {
+                //System.Threading.Thread.Sleep(1000);
+
                 //Raise event work performed
                 OnWorkPerformed(i + 1, workType);
             }
@@ -29,9 +32,15 @@ namespace EDEH.DelegatesAndEvents
             //    WorkPerformed(hours, workType);
             //}
 
-            if (WorkPerformed is WorkPerformedHandler del)
+            //if (WorkPerformed is WorkPerformedHandler del)
+            //{
+            //    //del(hours, workType);
+            //    del(this, new WorkPerformedEventArgs(hours, workType));
+            //}
+
+            var del = WorkPerformed as EventHandler<WorkPerformedEventArgs>;
+            if (del != null)
             {
-                //del(hours, workType);
                 del(this, new WorkPerformedEventArgs(hours, workType));
             }
         }
@@ -43,7 +52,8 @@ namespace EDEH.DelegatesAndEvents
             //    WorkCompleted(this, EventArgs.Empty);
             //}
 
-            if (WorkCompleted is EventHandler del)
+            var del = WorkCompleted as EventHandler;
+            if (del != null)
             {
                 del(this, EventArgs.Empty);
             }

@@ -13,9 +13,9 @@ namespace EDEH.DelegatesAndEvents
     {
         public static void Main(string[] args)
         {
-            WorkPerformedHandler del1 = new WorkPerformedHandler(WorkPerformed1);
-            WorkPerformedHandler del2 = new WorkPerformedHandler(WorkPerformed2);
-            WorkPerformedHandler del3 = new WorkPerformedHandler(WorkPerformed3);
+            //WorkPerformedHandler del1 = new WorkPerformedHandler(WorkPerformed1);
+            //WorkPerformedHandler del2 = new WorkPerformedHandler(WorkPerformed2);
+            //WorkPerformedHandler del3 = new WorkPerformedHandler(WorkPerformed3);
 
             //del1(5, WorkType.GenerateReports);
             //del2(10, WorkType.Golf);
@@ -28,34 +28,49 @@ namespace EDEH.DelegatesAndEvents
             //del1 += del3;
             //del1(10, WorkType.GenerateReports);
 
-            del1 += del2 + del3;
-            int finalHours = del1(10, WorkType.GenerateReports);
-            Console.WriteLine(finalHours);
+            //del1 += del2 + del3;
+            //int finalHours = del1(10, WorkType.GenerateReports);
+            //Console.WriteLine(finalHours);
+
+            Worker worker = new Worker();
+            worker.WorkPerformed += new EventHandler<WorkPerformedEventArgs>(Worker_WorkPerformed);
+            worker.WorkCompleted += new EventHandler(Worker_WorkCompleted);
+            worker.DoWork(5, WorkType.GenerateReports);
 
             Console.Read();
         }
 
-        public static void DoWork(WorkPerformedHandler workPerformedHandler)
+        private static void Worker_WorkCompleted(object sender, EventArgs e)
         {
-            workPerformedHandler(5, WorkType.GenerateReports);
+            Console.WriteLine("Worker is done");
         }
 
-        public static int WorkPerformed1(int hours, WorkType workType)
+        private static void Worker_WorkPerformed(object sender, WorkPerformedEventArgs e)
         {
-            Console.WriteLine("WorkPerformed1 called " + hours.ToString());
-            return hours + 1;
+            Console.WriteLine("Hours worked: " + e.Hours + " " + e.WorkType);
         }
 
-        public static int WorkPerformed2(int hours, WorkType workType)
-        {
-            Console.WriteLine("WorkPerformed2 called " + hours.ToString());
-            return hours + 2;
-        }
+        //public static void DoWork(WorkPerformedHandler workPerformedHandler)
+        //{
+        //    workPerformedHandler(5, WorkType.GenerateReports);
+        //}
 
-        private static int WorkPerformed3(int hours, WorkType workType)
-        {
-            Console.WriteLine("WorkPerformed3 called " + hours.ToString());
-            return hours + 3;
-        }
+        //public static int WorkPerformed1(int hours, WorkType workType)
+        //{
+        //    Console.WriteLine("WorkPerformed1 called " + hours.ToString());
+        //    return hours + 1;
+        //}
+
+        //public static int WorkPerformed2(int hours, WorkType workType)
+        //{
+        //    Console.WriteLine("WorkPerformed2 called " + hours.ToString());
+        //    return hours + 2;
+        //}
+
+        //private static int WorkPerformed3(int hours, WorkType workType)
+        //{
+        //    Console.WriteLine("WorkPerformed3 called " + hours.ToString());
+        //    return hours + 3;
+        //}
     }
 }
