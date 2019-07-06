@@ -40,23 +40,34 @@ namespace EDEH.DelegatesAndEvents
             //The compiler auto generates the EventHandler by using the delegate
             //defined in the Worker class
             //Use tab tab to auto generate the event handler
+            //Worker worker = new Worker();
+            //worker.WorkPerformed += Worker_WorkPerformed;
+            //worker.WorkCompleted += Worker_WorkCompleted;
+            //worker.DoWork(5, WorkType.GenerateReports);
+
             Worker worker = new Worker();
-            worker.WorkPerformed += Worker_WorkPerformed;
-            worker.WorkCompleted += Worker_WorkCompleted;
+            worker.WorkPerformed += delegate (object sender, WorkPerformedEventArgs e)
+            {
+                Console.WriteLine("Hours worked: " + e.Hours + " " + e.WorkType);
+            };
+            worker.WorkCompleted += delegate (object sender, EventArgs e)
+            {
+                Console.WriteLine("Worker is done");
+            };
             worker.DoWork(5, WorkType.GenerateReports);
 
             Console.Read();
         }
 
-        private static void Worker_WorkCompleted(object sender, EventArgs e)
-        {
-            Console.WriteLine("Worker is done");
-        }
+        //private static void Worker_WorkCompleted(object sender, EventArgs e)
+        //{
+        //    Console.WriteLine("Worker is done");
+        //}
 
-        private static void Worker_WorkPerformed(object sender, WorkPerformedEventArgs e)
-        {
-            Console.WriteLine("Hours worked: " + e.Hours + " " + e.WorkType);
-        }
+        //private static void Worker_WorkPerformed(object sender, WorkPerformedEventArgs e)
+        //{
+        //    Console.WriteLine("Hours worked: " + e.Hours + " " + e.WorkType);
+        //}
 
         //private static void Worker_WorkCompleted(object sender, EventArgs e)
         //{
