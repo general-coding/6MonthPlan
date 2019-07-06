@@ -11,18 +11,26 @@ namespace EDEH.DelegatesAndEvents
 
     public class Program
     {
-        public delegate void WorkPerformedHandler(int hours, WorkType workType);
-
         public static void Main(string[] args)
         {
             WorkPerformedHandler del1 = new WorkPerformedHandler(WorkPerformed1);
             WorkPerformedHandler del2 = new WorkPerformedHandler(WorkPerformed2);
+            WorkPerformedHandler del3 = new WorkPerformedHandler(WorkPerformed3);
 
             //del1(5, WorkType.GenerateReports);
             //del2(10, WorkType.Golf);
 
-            DoWork(del1);
-            DoWork(del2);
+            //DoWork(del1);
+            //DoWork(del2);
+
+            //Stacking events on top of each other
+            //del1 += del2;
+            //del1 += del3;
+            //del1(10, WorkType.GenerateReports);
+
+            del1 += del2 + del3;
+            int finalHours = del1(10, WorkType.GenerateReports);
+            Console.WriteLine(finalHours);
 
             Console.Read();
         }
@@ -32,14 +40,22 @@ namespace EDEH.DelegatesAndEvents
             workPerformedHandler(5, WorkType.GenerateReports);
         }
 
-        public static void WorkPerformed1(int hours, WorkType workType)
+        public static int WorkPerformed1(int hours, WorkType workType)
         {
             Console.WriteLine("WorkPerformed1 called " + hours.ToString());
+            return hours + 1;
         }
 
-        public static void WorkPerformed2(int hours, WorkType workType)
+        public static int WorkPerformed2(int hours, WorkType workType)
         {
             Console.WriteLine("WorkPerformed2 called " + hours.ToString());
+            return hours + 2;
+        }
+
+        private static int WorkPerformed3(int hours, WorkType workType)
+        {
+            Console.WriteLine("WorkPerformed3 called " + hours.ToString());
+            return hours + 3;
         }
     }
 }
