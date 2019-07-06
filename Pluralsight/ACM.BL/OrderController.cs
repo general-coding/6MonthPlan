@@ -1,5 +1,8 @@
 ﻿using ACM.Common;
 using ACME.Common;
+using System;
+using System.Diagnostics;
+using System.Linq;
 
 namespace ACM.BL
 {
@@ -21,11 +24,33 @@ namespace ACM.BL
             emailLibrary = new EmailLibrary();
         }
 
-        public void PlaceOrder(Customer customer,
+        public OperationResult PlaceOrder(Customer customer,
                                 Order order,
                                 Payment payment,
                                 bool allowSplitOrders, bool emailReceipt)
         {
+            Debug.Assert(customerRepository != null, "Missing customer respository instance");
+            Debug.Assert(orderRepository != null, "Missing order repository instance");
+            Debug.Assert(inventoryRepository != null, "Missing inventory repository instance");
+            Debug.Assert(emailLibrary != null, "Missing email library instance");
+
+            OperationResult operationResult = new OperationResult();
+
+            if (customer == null)
+            {
+                throw new ArgumentNullException("Customer instance is null");
+            }
+
+            if (order == null)
+            {
+                throw new ArgumentNullException("Order instance is null");
+            }
+
+            if (payment == null)
+            {
+                throw new ArgumentNullException("Payment instance is null");
+            }
+
             customerRepository.Add(customer);
 
             orderRepository.Add(order);
@@ -36,7 +61,7 @@ namespace ACM.BL
 
             if (emailReceipt)
             {
-                OperationResult operationResult = customer.ValidateEmail();
+                operationResult = customer.ValidateEmail();
                 if (operationResult.Success)
                 {
                     customerRepository.Update();
@@ -44,7 +69,15 @@ namespace ACM.BL
                     emailLibrary.SendEmail(customer.EmailAddress,
                                             "Here is your receipt");
                 }
+                else
+                {
+                    //Log messages
+                    if (operationResult.MessageList.Any())
+                        operationResult.AddMessage(operationResult.MessageList[0]);
+                }
             }
+
+            return operationResult;
         }
     }
 }
