@@ -39,6 +39,7 @@ namespace EDEH.DelegatesAndEvents
 
             //The compiler auto generates the EventHandler by using the delegate
             //defined in the Worker class
+            //Use tab tab to auto generate the event handler
             Worker worker = new Worker();
             worker.WorkPerformed += Worker_WorkPerformed;
             worker.WorkCompleted += Worker_WorkCompleted;
