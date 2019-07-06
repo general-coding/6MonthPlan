@@ -2,7 +2,7 @@
 
 namespace EDEH.DelegatesAndEvents
 {
-    public delegate int WorkPerformedHandler(int hours, WorkType workType);
+    public delegate int WorkPerformedHandler(object sender, WorkPerformedEventArgs e);
 
     public class Worker
     {
@@ -31,7 +31,8 @@ namespace EDEH.DelegatesAndEvents
 
             if (WorkPerformed is WorkPerformedHandler del)
             {
-                del(hours, workType);
+                //del(hours, workType);
+                del(this, new WorkPerformedEventArgs(hours, workType));
             }
         }
 
