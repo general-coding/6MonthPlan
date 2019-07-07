@@ -15,5 +15,11 @@ namespace EDEH.LambdasAndDelegates
             action(x, y);
             Console.WriteLine("Action has been processed");
         }
+
+        public void ProcessFunc(int x, int y, Func<int, int, int> bizRulesDelegate)
+        {
+            var result = bizRulesDelegate(x, y);
+            Console.WriteLine(result);
+        }
     }
 }
