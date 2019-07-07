@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace EDEH.LambdasAndDelegates
 {
@@ -8,7 +10,24 @@ namespace EDEH.LambdasAndDelegates
     {
         public static void Main(string[] args)
         {
-            ProcessData processData = new ProcessData();
+            List<Customer> customers = new List<Customer>
+            {
+                new Customer { City = "Phoenix", FirstName = "John", LastName = "Doe", ID = 1},
+                new Customer { City = "Phoenix", FirstName = "Jane", LastName = "Doe", ID = 500},
+                new Customer { City = "Seattle", FirstName = "Suki", LastName = "Pizzoro", ID = 3},
+                new Customer { City = "New York City", FirstName = "Michelle", LastName = "Smith", ID = 4},
+            };
+
+            IEnumerable<Customer> phxCustomers = customers
+                                                    .Where(c => c.City == "Phoenix"
+                                                            && c.ID < 500)
+                                                    .OrderBy(c => c.FirstName);
+            foreach (Customer customer in phxCustomers)
+            {
+                Console.WriteLine(customer.FirstName);
+            }
+
+            //ProcessData processData = new ProcessData();
 
             //BizRulesDelegate addDelegate = (x, y) => x + y;
             //BizRulesDelegate multiplyDelegate = (x, y) => x * y;
@@ -20,10 +39,10 @@ namespace EDEH.LambdasAndDelegates
             //processData.ProcessAction(2, 3, addAction);
             //processData.ProcessAction(2, 3, multiplyAction);
 
-            Func<int, int, int> funcAddDel = (x, y) => x + y;
-            Func<int, int, int> funcMutliplyDel = (x, y) => x * y;
-            processData.ProcessFunc(2, 3, funcAddDel);
-            processData.ProcessFunc(2, 3, funcMutliplyDel);
+            //Func<int, int, int> funcAddDel = (x, y) => x + y;
+            //Func<int, int, int> funcMutliplyDel = (x, y) => x * y;
+            //processData.ProcessFunc(2, 3, funcAddDel);
+            //processData.ProcessFunc(2, 3, funcMutliplyDel);
 
             //Worker worker = new Worker();
             //worker.WorkPerformed += (s, e) =>
