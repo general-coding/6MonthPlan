@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EDH.LambdasAndDelegates
+namespace EDEH.LambdasAndDelegates
 {
     //public delegate int WorkPerformedHandler(object sender, WorkPerformedEventArgs e);
 

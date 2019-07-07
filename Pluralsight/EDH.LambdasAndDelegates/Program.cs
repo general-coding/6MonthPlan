@@ -4,12 +4,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EDH.LambdasAndDelegates
+namespace EDEH.LambdasAndDelegates
 {
-    class Program
+    public delegate int BizRulesDelegate(int x, int y);
+
+    public class Program
     {
         public static void Main(string[] args)
         {
+            BizRulesDelegate addDelegate = (x, y) => x + y;
+            BizRulesDelegate multiplyDelegate = (x, y) => x * y;
+
+            ProcessData processData = new ProcessData();
+            processData.Process(2, 3, addDelegate);
+            processData.Process(2, 3, multiplyDelegate);
+
             var worker = new Worker();
             worker.WorkPerformed += (s, e) =>
             {
