@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EDEH.LambdasAndDelegates
 {
@@ -12,6 +8,12 @@ namespace EDEH.LambdasAndDelegates
         {
             var result = bizRulesDelegate(x, y);
             Console.WriteLine(result);
+        }
+
+        public void ProcessAction(int x, int y, Action<int, int> action)
+        {
+            action(x, y);
+            Console.WriteLine("Action has been processed");
         }
     }
 }

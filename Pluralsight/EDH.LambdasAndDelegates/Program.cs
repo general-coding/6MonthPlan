@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EDEH.LambdasAndDelegates
 {
@@ -19,7 +15,12 @@ namespace EDEH.LambdasAndDelegates
             processData.Process(2, 3, addDelegate);
             processData.Process(2, 3, multiplyDelegate);
 
-            var worker = new Worker();
+            Action<int, int> addAction = (x, y) => Console.WriteLine(x + y);
+            Action<int, int> multiplyAction = (x, y) => Console.WriteLine(x * y);
+            processData.ProcessAction(2, 3, addAction);
+            processData.ProcessAction(2, 3, multiplyAction);
+
+            Worker worker = new Worker();
             worker.WorkPerformed += (s, e) =>
             {
                 Console.WriteLine("Worked: " + e.Hours + " hour(s) doing: " + e.WorkType);
