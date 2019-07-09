@@ -20,7 +20,7 @@ namespace StockAnalyzer.Windows
             InitializeComponent();
         }
 
-        private async void Search_Click(object sender, RoutedEventArgs e)
+        private void Search_Click(object sender, RoutedEventArgs e)
         {
             #region Before loading stock data
             var watch = new Stopwatch();
@@ -45,28 +45,37 @@ namespace StockAnalyzer.Windows
             //}
 
             //Using file system
-            string[] lines = File.ReadAllLines(@"C:\Code\StockData\StockPrices_Small.csv");
-
-            List<StockPrice> data = new List<StockPrice>();
-
-            foreach (string line in lines.Skip(1))
+            //Task.Run() will queue the data immediately.
+            //#region After stock data is loaded is running immediately after Task.Run
+            //There will be issues with the displaying the time taken to load
+            Task.Run(() =>
             {
-                string[] segments = line.Split(',');
+                string[] lines = File.ReadAllLines(@"C:\Code\StockData\StockPrices_Small.csv");
 
-                for (int i = 0; i < segments.Length; i++) segments[i] = segments[i].Trim('\'', '"');
-                var price = new StockPrice
+                List<StockPrice> data = new List<StockPrice>();
+
+                foreach (string line in lines.Skip(1))
                 {
-                    Ticker = segments[0],
-                    TradeDate = DateTime.ParseExact(segments[1], "M/d/yyyy h:mm:ss tt", CultureInfo.InvariantCulture),
-                    Volume = Convert.ToInt32(segments[6]),
-                    Change = Convert.ToDecimal(segments[7]),
-                    ChangePercent = Convert.ToDecimal(segments[8]),
-                };
-                data.Add(price);
-            }
+                    string[] segments = line.Split(',');
 
-            Stocks.ItemsSource = data.Where(price => price.Ticker == Ticker.Text);
+                    for (int i = 0; i < segments.Length; i++) segments[i] = segments[i].Trim('\'', '"');
+                    var price = new StockPrice
+                    {
+                        Ticker = segments[0],
+                        TradeDate = DateTime.ParseExact(segments[1], "M/d/yyyy h:mm:ss tt", CultureInfo.InvariantCulture),
+                        Volume = Convert.ToInt32(segments[6]),
+                        Change = Convert.ToDecimal(segments[7]),
+                        ChangePercent = Convert.ToDecimal(segments[8]),
+                    };
+                    data.Add(price);
+                }
 
+                //Move the execution to the UI thread
+                Dispatcher.Invoke(() =>
+                {
+                    Stocks.ItemsSource = data.Where(price => price.Ticker == Ticker.Text);
+                });
+            });
 
             #region After stock data is loaded
             StocksStatus.Text = $"Loaded stocks for {Ticker.Text} in {watch.ElapsedMilliseconds}ms";
