@@ -2,6 +2,7 @@
 using StockAnalyzer.Core.Domain;
 using StockAnalyzer.Windows.Services;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
@@ -326,34 +327,51 @@ namespace StockAnalyzer.Windows
             {
                 string[] tickers = Ticker.Text.Split(',', ' ');
 
-                MockStockService stockService = new MockStockService();
+                StockService stockService = new StockService();
+                ConcurrentBag<StockPrice> stocks = new ConcurrentBag<StockPrice>();
 
                 List<Task<IEnumerable<StockPrice>>> tickerLoadingTasks = new List<Task<IEnumerable<StockPrice>>>();
 
                 foreach (string ticker in tickers)
                 {
                     Task<IEnumerable<StockPrice>> loadTask = stockService.GetStockPricesFor(ticker
-                                                        , cancellationTokenSource.Token);
+                                                            , cancellationTokenSource.Token)
+                                                            .ContinueWith(t =>
+                                                            {
+                                                                foreach (StockPrice stock in t.Result.Take(5))
+                                                                {
+                                                                    stocks.Add(stock);
+                                                                }
+
+                                                                Dispatcher.Invoke(() =>
+                                                                {
+                                                                    Stocks.ItemsSource = stocks.ToArray();
+                                                                });
+
+                                                                return t.Result;
+                                                            });
                     tickerLoadingTasks.Add(loadTask);
                 }
 
                 //Add a delay
-                Task timeoutTask = Task.Delay(2000);
+                //Task timeoutTask = Task.Delay(2000);
 
                 //Wait for all the stock prices to be listed
                 Task<IEnumerable<StockPrice>[]> allStocksLoadingTask = Task.WhenAll(tickerLoadingTasks);
 
                 //Returns the task that completed execution, of the list of Tasks
-                Task completedTask = await Task.WhenAny(timeoutTask, allStocksLoadingTask);
+                //Task completedTask = await Task.WhenAny(timeoutTask, allStocksLoadingTask);
 
-                if (completedTask == timeoutTask)
-                {
-                    cancellationTokenSource.Cancel();
-                    cancellationTokenSource = null;
-                    throw new Exception("Timeout!");
-                }
+                //if (completedTask == timeoutTask)
+                //{
+                //    cancellationTokenSource.Cancel();
+                //    cancellationTokenSource = null;
+                //    throw new Exception("Timeout!");
+                //}
 
-                Stocks.ItemsSource = allStocksLoadingTask.Result.SelectMany(stocks => stocks);
+                //Stocks.ItemsSource = allStocksLoadingTask.Result.SelectMany(stocks => stocks);
+
+                await allStocksLoadingTask;
             }
             catch (Exception ex)
             {
@@ -364,6 +382,11 @@ namespace StockAnalyzer.Windows
             StocksStatus.Text = $"Loaded stocks for {Ticker.Text} in {watch.ElapsedMilliseconds}ms";
             StockProgress.Visibility = Visibility.Hidden;
             #endregion
+        }
+
+        private object ConcurrentBag<T>()
+        {
+            throw new NotImplementedException();
         }
 
         #endregion
