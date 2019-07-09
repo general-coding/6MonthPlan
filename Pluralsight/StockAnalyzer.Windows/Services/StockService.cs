@@ -1,10 +1,10 @@
-﻿using Newtonsoft.Json;
-using StockAnalyzer.Core.Domain;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using StockAnalyzer.Core.Domain;
 
 namespace StockAnalyzer.Windows.Services
 {
@@ -14,15 +14,17 @@ namespace StockAnalyzer.Windows.Services
             CancellationToken cancellationToken);
     }
 
-    public class StockService
+    public class StockService : IStockService
     {
-        public async Task<IEnumerable<StockPrice>> GetStockPricesFor(string ticker
-            , CancellationToken cancellationToken)
+        // int i = 0;
+        public async Task<IEnumerable<StockPrice>> GetStockPricesFor(string ticker,
+            CancellationToken cancellationToken)
         {
+            // await Task.Delay((i++) * 1000);
             using (var client = new HttpClient())
             {
-                var result = await client.GetAsync($"http://localhost:61363/api/stocks/{ticker}"
-                            , cancellationToken);
+                var result = await client.GetAsync($"http://localhost:61363/api/stocks/{ticker}",
+                    cancellationToken);
 
                 result.EnsureSuccessStatusCode();
 
