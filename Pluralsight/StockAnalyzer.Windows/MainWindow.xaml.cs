@@ -20,7 +20,7 @@ namespace StockAnalyzer.Windows
             InitializeComponent();
         }
 
-        private void Search_Click(object sender, RoutedEventArgs e)
+        private async void Search_Click(object sender, RoutedEventArgs e)
         {
             #region Before loading stock data
             var watch = new Stopwatch();
@@ -48,7 +48,10 @@ namespace StockAnalyzer.Windows
             //Task.Run() will queue the data immediately.
             //#region After stock data is loaded is running immediately after Task.Run
             //There will be issues with the displaying the time taken to load
-            Task.Run(() =>
+            //Adding the await, queues the data fetch.
+            //This method will wait for the data fetch to complete. After that it will
+            //execute #region After stock data is loaded
+            await Task.Run(() =>
             {
                 string[] lines = File.ReadAllLines(@"C:\Code\StockData\StockPrices_Small.csv");
 
