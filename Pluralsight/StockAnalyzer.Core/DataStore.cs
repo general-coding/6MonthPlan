@@ -14,7 +14,7 @@ namespace StockAnalyzer.Core
     public class DataStore
     {
         public Dictionary<string, Company> Companies = new Dictionary<string, Company>();
-        public static Dictionary<string, IEnumerable<StockPrice>> Stocks 
+        public static Dictionary<string, IEnumerable<StockPrice>> Stocks
             = new Dictionary<string, IEnumerable<StockPrice>>();
 
 
@@ -43,7 +43,7 @@ namespace StockAnalyzer.Core
                 while ((line = await stream.ReadLineAsync()) != null)
                 {
                     #region Loading and Adding Company to In-Memory Dictionary
-                    
+
                     var segments = line.Split(',');
 
                     for (var i = 0; i < segments.Length; i++) segments[i] = segments[i].Trim('\'', '"');
