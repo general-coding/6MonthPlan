@@ -7,6 +7,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Navigation;
@@ -118,6 +119,87 @@ namespace StockAnalyzer.Windows
 
         #region using file system to load data, without async, but with Task and ContinueWith to make it async
 
+        //private void Search_Click(object sender, RoutedEventArgs e)
+        //{
+        //    #region Before loading stock data
+        //    var watch = new Stopwatch();
+        //    watch.Start();
+        //    StockProgress.Visibility = Visibility.Visible;
+        //    StockProgress.IsIndeterminate = true;
+        //    #endregion
+
+        //    #region using file system to load data - data loaded on UI thread - not good idea
+
+        //    Task<string[]> loadLinesTask = Task.Run(() =>
+        //    {
+        //        string[] lines = File.ReadAllLines(@"C:\Code\StockData\StockPrices_Small.csv");
+
+        //        return lines;
+        //    });
+
+        //    //Waits for the loadLinesTask to complete execution
+        //    //Then it loads data
+        //    Task processStocksTask = loadLinesTask.ContinueWith(t =>
+        //    {
+        //        string[] lines = t.Result;
+
+        //        List<StockPrice> data = new List<StockPrice>();
+
+        //        foreach (string line in lines.Skip(1))
+        //        {
+        //            string[] segments = line.Split(',');
+
+        //            for (int i = 0; i < segments.Length; i++) segments[i] = segments[i].Trim('\'', '"');
+        //            var price = new StockPrice
+        //            {
+        //                Ticker = segments[0],
+        //                TradeDate = DateTime.ParseExact(segments[1], "M/d/yyyy h:mm:ss tt", CultureInfo.InvariantCulture),
+        //                Volume = Convert.ToInt32(segments[6]),
+        //                Change = Convert.ToDecimal(segments[7]),
+        //                ChangePercent = Convert.ToDecimal(segments[8]),
+        //            };
+        //            data.Add(price);
+        //        }
+
+        //        //Once the data is loaded, transfer control to UI thread to display
+        //        Dispatcher.Invoke(() =>
+        //        {
+        //            Stocks.ItemsSource = data.Where(price => price.Ticker == Ticker.Text);
+        //        });
+        //    }
+        //        , TaskContinuationOptions.OnlyOnRanToCompletion);
+
+        //    //Executes and shows exception to user when processStocksTask fails
+        //    loadLinesTask.ContinueWith(t =>
+        //    {
+        //        Dispatcher.Invoke(() =>
+        //        {
+        //            Notes.Text = t.Exception.InnerException.Message;
+        //        });
+        //    }
+        //        , TaskContinuationOptions.OnlyOnFaulted);
+
+        //    //Notify user of time taken only after data is completely loaded
+        //    processStocksTask.ContinueWith(_ =>
+        //    {
+        //        Dispatcher.Invoke(() =>
+        //        {
+        //            #region After stock data is loaded
+        //            StocksStatus.Text = $"Loaded stocks for {Ticker.Text} in {watch.ElapsedMilliseconds}ms";
+        //            StockProgress.Visibility = Visibility.Hidden;
+        //            #endregion
+        //        });
+        //    });
+
+        //    #endregion
+        //}
+
+        #endregion
+
+        #region using cancellation on failure
+
+        CancellationTokenSource cancellationTokenSource = null;
+
         private void Search_Click(object sender, RoutedEventArgs e)
         {
             #region Before loading stock data
@@ -127,20 +209,29 @@ namespace StockAnalyzer.Windows
             StockProgress.IsIndeterminate = true;
             #endregion
 
-            #region using file system to load data - data loaded on UI thread - not good idea
+            #region cancellations
 
-            Task<string[]> loadLinesTask = Task.Run(() =>
+            if (cancellationTokenSource != null)
             {
-                string[] lines = File.ReadAllLines(@"C:\Code\StockData\ABC.csv");
+                cancellationTokenSource.Cancel();
+                cancellationTokenSource = null;
+                return;
+            }
 
-                return lines;
+            cancellationTokenSource = new CancellationTokenSource();
+
+            cancellationTokenSource.Token.Register(() =>
+            {
+                Notes.Text = "Cancellation requested.";
             });
 
-            //Waits for the loadLinesTask to complete execution
+            var loadLinesTask = SearchForStocks(cancellationTokenSource.Token);
+
+            //Waits for the loadLinesTask to complete execution with success and not cancelled
             //Then it loads data
             Task processStocksTask = loadLinesTask.ContinueWith(t =>
             {
-                string[] lines = t.Result;
+                List<string> lines = t.Result;
 
                 List<StockPrice> data = new List<StockPrice>();
 
@@ -166,7 +257,9 @@ namespace StockAnalyzer.Windows
                     Stocks.ItemsSource = data.Where(price => price.Ticker == Ticker.Text);
                 });
             }
-                , TaskContinuationOptions.OnlyOnRanToCompletion);
+                , cancellationTokenSource.Token
+                , TaskContinuationOptions.OnlyOnRanToCompletion
+                , TaskScheduler.Current);
 
             //Executes and shows exception to user when processStocksTask fails
             loadLinesTask.ContinueWith(t =>
@@ -194,6 +287,32 @@ namespace StockAnalyzer.Windows
         }
 
         #endregion
+
+        private Task<List<string>> SearchForStocks(CancellationToken cancellationToken)
+        {
+            Task<List<string>> loadLinesTask = Task.Run(async () =>
+            {
+                List<string> lines = new List<string>();
+
+                using (StreamReader stream = new StreamReader(File.OpenRead(@"C:\Code\StockData\StockPrices_Small.csv")))
+                {
+                    string line;
+
+                    while ((line = await stream.ReadLineAsync()) != null)
+                    {
+                        if (cancellationToken.IsCancellationRequested)
+                        {
+                            lines.Add(line);
+                        }
+                    }
+                }
+
+                return lines;
+            }
+                , cancellationToken);
+
+            return loadLinesTask;
+        }
 
         private void Hyperlink_OnRequestNavigate(object sender, RequestNavigateEventArgs e)
         {
