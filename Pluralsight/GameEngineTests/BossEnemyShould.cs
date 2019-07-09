@@ -1,7 +1,6 @@
-﻿using GameEngine;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace GameEngineTests
+namespace GameEngine.Test
 {
     [TestClass]
     public class BossEnemyShould

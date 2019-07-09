@@ -1,5 +1,4 @@
-﻿using GameEngine;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace GameEngine.Test
 {
@@ -58,6 +57,36 @@ namespace GameEngine.Test
             player.Sleep(); //Expect increase between 1 and 100 inclusive
 
             Assert.IsTrue(player.Health >= 101 && player.Health <= 200);
+        }
+
+        [TestMethod()]
+        public void CalculateFullName()
+        {
+            PlayerCharacter player = new PlayerCharacter();
+            player.FirstName = "Alpha";
+            player.LastName = "Bravo";
+
+            Assert.AreEqual("Alpha Bravo", player.FullName);
+        }
+
+        [TestMethod()]
+        public void CalculateFullName_Caps()
+        {
+            PlayerCharacter player = new PlayerCharacter();
+            player.FirstName = "Alpha";
+            player.LastName = "Bravo";
+
+            Assert.AreEqual("ALPHA BRAVO", player.FullName);
+        }
+
+        [TestMethod()]
+        public void CalculateFullName_IgnoreCase()
+        {
+            PlayerCharacter player = new PlayerCharacter();
+            player.FirstName = "Alpha";
+            player.LastName = "Bravo";
+
+            Assert.AreEqual("Alpha Bravo", player.FullName, ignoreCase: true);
         }
     }
 }
