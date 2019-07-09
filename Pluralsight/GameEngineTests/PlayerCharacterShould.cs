@@ -69,10 +69,13 @@ namespace GameEngine.Test
         [TestCategory("Player Health")]
         [DataTestMethod()]
 
+        [DynamicData(nameof(ExternalHealthDamageTestData.TestData)
+                    , typeof(ExternalHealthDamageTestData))]
+
         //Allows using a data preparer class
-        [DynamicData(nameof(DamageData.GetDamages)
-                    , typeof(DamageData)
-                    , DynamicDataSourceType.Method)]
+        //[DynamicData(nameof(DamageData.GetDamages)
+        //            , typeof(DamageData)
+        //            , DynamicDataSourceType.Method)]
 
         //Allows us to choose the property (class property)
         //of the test data
