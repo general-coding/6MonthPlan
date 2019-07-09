@@ -12,5 +12,13 @@ namespace GameEngine.Test
 
             Assert.IsTrue(player.IsNoob);
         }
+
+        [TestMethod()]
+        public void NotHaveNickNameByDefault()
+        {
+            PlayerCharacter player = new PlayerCharacter();
+
+            Assert.IsNull(player.Nickname);
+        }
     }
 }
