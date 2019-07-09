@@ -20,7 +20,105 @@ namespace StockAnalyzer.Windows
             InitializeComponent();
         }
 
-        private async void Search_Click(object sender, RoutedEventArgs e)
+        #region using web to load data
+
+        //private async void Search_Click(object sender, RoutedEventArgs e)
+        //{
+        //    #region Before loading stock data
+        //    var watch = new Stopwatch();
+        //    watch.Start();
+        //    StockProgress.Visibility = Visibility.Visible;
+        //    StockProgress.IsIndeterminate = true;
+        //    #endregion
+
+        //    #region using web to load data
+
+        //    //using (HttpClient client = new HttpClient())
+        //    //{
+        //    //    HttpResponseMessage response = await client.GetAsync($"http://localhost:61363/api/stocks/{Ticker.Text}");
+
+        //    //    try
+        //    //    {
+        //    //        await GetStocks();
+        //    //    }
+        //    //    catch (Exception ex)
+        //    //    {
+        //    //        Notes.Text += ex.Message;
+        //    //    }
+        //    //}
+
+        //    #endregion
+
+        //    #region After stock data is loaded
+        //    StocksStatus.Text = $"Loaded stocks for {Ticker.Text} in {watch.ElapsedMilliseconds}ms";
+        //    StockProgress.Visibility = Visibility.Hidden;
+        //    #endregion
+        //}
+
+        #endregion
+
+        #region using file system to load data - data loaded on UI thread - not good idea
+
+        //private async void Search_Click(object sender, RoutedEventArgs e)
+        //{
+        //    #region Before loading stock data
+        //    var watch = new Stopwatch();
+        //    watch.Start();
+        //    StockProgress.Visibility = Visibility.Visible;
+        //    StockProgress.IsIndeterminate = true;
+        //    #endregion
+
+        //    #region using file system to load data - data loaded on UI thread - not good idea
+
+        //    //Using file system
+        //    //Task.Run() will queue the data immediately.
+        //    //#region After stock data is loaded is running immediately after Task.Run
+        //    //There will be issues with the displaying the time taken to load
+        //    //Adding the await, queues the data fetch.
+        //    //This method will wait for the data fetch to complete. After that it will
+        //    //execute #region After stock data is loaded
+        //    //await Task.Run(() =>
+        //    //{
+        //    //    string[] lines = File.ReadAllLines(@"C:\Code\StockData\StockPrices_Small.csv");
+
+        //    //    List<StockPrice> data = new List<StockPrice>();
+
+        //    //    foreach (string line in lines.Skip(1))
+        //    //    {
+        //    //        string[] segments = line.Split(',');
+
+        //    //        for (int i = 0; i < segments.Length; i++) segments[i] = segments[i].Trim('\'', '"');
+        //    //        var price = new StockPrice
+        //    //        {
+        //    //            Ticker = segments[0],
+        //    //            TradeDate = DateTime.ParseExact(segments[1], "M/d/yyyy h:mm:ss tt", CultureInfo.InvariantCulture),
+        //    //            Volume = Convert.ToInt32(segments[6]),
+        //    //            Change = Convert.ToDecimal(segments[7]),
+        //    //            ChangePercent = Convert.ToDecimal(segments[8]),
+        //    //        };
+        //    //        data.Add(price);
+        //    //    }
+
+        //    //    //Move the execution to the UI thread
+        //    //    Dispatcher.Invoke(() =>
+        //    //    {
+        //    //        Stocks.ItemsSource = data.Where(price => price.Ticker == Ticker.Text);
+        //    //    });
+        //    //});
+
+        //    #endregion
+
+        //    #region After stock data is loaded
+        //    StocksStatus.Text = $"Loaded stocks for {Ticker.Text} in {watch.ElapsedMilliseconds}ms";
+        //    StockProgress.Visibility = Visibility.Hidden;
+        //    #endregion
+        //}
+
+        #endregion
+
+        #region using file system to load data, without async, but with Task and ContinueWith to make it async
+
+        private void Search_Click(object sender, RoutedEventArgs e)
         {
             #region Before loading stock data
             var watch = new Stopwatch();
@@ -29,31 +127,20 @@ namespace StockAnalyzer.Windows
             StockProgress.IsIndeterminate = true;
             #endregion
 
-            //Using web
-            //using (HttpClient client = new HttpClient())
-            //{
-            //    HttpResponseMessage response = await client.GetAsync($"http://localhost:61363/api/stocks/{Ticker.Text}");
+            #region using file system to load data - data loaded on UI thread - not good idea
 
-            //    try
-            //    {
-            //        await GetStocks();
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        Notes.Text += ex.Message;
-            //    }
-            //}
-
-            //Using file system
-            //Task.Run() will queue the data immediately.
-            //#region After stock data is loaded is running immediately after Task.Run
-            //There will be issues with the displaying the time taken to load
-            //Adding the await, queues the data fetch.
-            //This method will wait for the data fetch to complete. After that it will
-            //execute #region After stock data is loaded
-            await Task.Run(() =>
+            Task<string[]> loadLinesTask = Task.Run(() =>
             {
                 string[] lines = File.ReadAllLines(@"C:\Code\StockData\StockPrices_Small.csv");
+
+                return lines;
+            });
+
+            //Waits for the loadLinesTask to complete execution
+            //Then it loads data
+            Task processStocksTask = loadLinesTask.ContinueWith(t =>
+            {
+                string[] lines = t.Result;
 
                 List<StockPrice> data = new List<StockPrice>();
 
@@ -73,18 +160,29 @@ namespace StockAnalyzer.Windows
                     data.Add(price);
                 }
 
-                //Move the execution to the UI thread
+                //Once the data is loaded, transfer control to UI thread to display
                 Dispatcher.Invoke(() =>
                 {
                     Stocks.ItemsSource = data.Where(price => price.Ticker == Ticker.Text);
                 });
             });
 
-            #region After stock data is loaded
-            StocksStatus.Text = $"Loaded stocks for {Ticker.Text} in {watch.ElapsedMilliseconds}ms";
-            StockProgress.Visibility = Visibility.Hidden;
+            //Notify user of time taken only after data is completely loaded
+            processStocksTask.ContinueWith(_ =>
+            {
+                Dispatcher.Invoke(() =>
+                {
+                    #region After stock data is loaded
+                    StocksStatus.Text = $"Loaded stocks for {Ticker.Text} in {watch.ElapsedMilliseconds}ms";
+                    StockProgress.Visibility = Visibility.Hidden;
+                    #endregion
+                });
+            });
+
             #endregion
         }
+
+        #endregion
 
         private void Hyperlink_OnRequestNavigate(object sender, RequestNavigateEventArgs e)
         {
