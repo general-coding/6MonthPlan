@@ -42,9 +42,7 @@ namespace GameEngine.Test
 
         [PlayerHealth]
         [DataTestMethod()]
-
-        [DynamicData(nameof(ExternalHealthDamageTestData.TestData)
-                    , typeof(ExternalHealthDamageTestData))]
+        [CsvDataSource("Damage.csv")]
         public void TakeDamageTest(int damage, int expectedHealth)
         {
             player.TakeDamage(damage);
@@ -62,7 +60,6 @@ namespace GameEngine.Test
         }
 
         [TestMethod()]
-        [PlayerHealth]
         [TestCategory("Another Category")]
         public void IncreaseHealthAfterSleeping()
         {

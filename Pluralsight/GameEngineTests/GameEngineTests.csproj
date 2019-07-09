@@ -57,6 +57,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Assembly.cs" />
+    <Compile Include="CsvDataSourceAttribute.cs" />
     <Compile Include="CustomAsserts.cs" />
     <Compile Include="CustomCategories.cs" />
     <Compile Include="DamageData.cs" />
