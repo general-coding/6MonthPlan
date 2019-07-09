@@ -131,7 +131,7 @@ namespace StockAnalyzer.Windows
 
             Task<string[]> loadLinesTask = Task.Run(() =>
             {
-                string[] lines = File.ReadAllLines(@"C:\Code\StockData\StockPrices_Small.csv");
+                string[] lines = File.ReadAllLines(@"C:\Code\StockData\ABC.csv");
 
                 return lines;
             });
@@ -165,7 +165,18 @@ namespace StockAnalyzer.Windows
                 {
                     Stocks.ItemsSource = data.Where(price => price.Ticker == Ticker.Text);
                 });
-            });
+            }
+                , TaskContinuationOptions.OnlyOnRanToCompletion);
+
+            //Executes and shows exception to user when processStocksTask fails
+            loadLinesTask.ContinueWith(t =>
+            {
+                Dispatcher.Invoke(() =>
+                {
+                    Notes.Text = t.Exception.InnerException.Message;
+                });
+            }
+                , TaskContinuationOptions.OnlyOnFaulted);
 
             //Notify user of time taken only after data is completely loaded
             processStocksTask.ContinueWith(_ =>
