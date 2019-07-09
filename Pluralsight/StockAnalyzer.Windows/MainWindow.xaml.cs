@@ -1,6 +1,7 @@
 ﻿using StockAnalyzer.Core.Domain;
 using StockAnalyzer.Windows.Services;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -18,6 +19,113 @@ namespace StockAnalyzer.Windows
         {
             InitializeComponent();
         }
+
+        #region Processing a collection of data in parallel
+
+        CancellationTokenSource cancellationTokenSource = null;
+
+        private async void Search_Click(object sender, RoutedEventArgs e)
+        {
+
+            #region Before loading stock data
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
+            StockProgress.Visibility = Visibility.Visible;
+            StockProgress.IsIndeterminate = true;
+
+            Search.Content = "Cancel";
+            #endregion
+
+            #region Cancellation
+            if (cancellationTokenSource != null)
+            {
+                cancellationTokenSource.Cancel();
+                cancellationTokenSource = null;
+                return;
+            }
+
+            cancellationTokenSource = new CancellationTokenSource();
+
+            cancellationTokenSource.Token.Register(() =>
+            {
+                Notes.Text += "Cancellation requested" + Environment.NewLine;
+            });
+            #endregion
+
+            try
+            {
+                #region Load One or Many Tickers
+                string[] tickers = Ticker.Text.Split(',', ' ');
+
+                StockService service = new StockService();
+
+                List<Task<IEnumerable<StockPrice>>> tickerLoadingTasks = new List<Task<IEnumerable<StockPrice>>>();
+                foreach (string ticker in tickers)
+                {
+                    Task<IEnumerable<StockPrice>> loadTask = service.GetStockPricesFor(ticker, cancellationTokenSource.Token);
+
+                    tickerLoadingTasks.Add(loadTask);
+                }
+                #endregion
+
+                IEnumerable<StockPrice>[] loadedStocks = await Task.WhenAll(tickerLoadingTasks);
+
+                ConcurrentBag<StockCalculation> values = new ConcurrentBag<StockCalculation>();
+
+                ParallelLoopResult executionResult = Parallel.ForEach(loadedStocks,
+                    new ParallelOptions { MaxDegreeOfParallelism = 2 },
+                    (stocks, state) =>
+                    {
+                        string ticker = stocks.First().Ticker;
+
+                        Debug.WriteLine($"Start processing {ticker}");
+
+                        if (ticker == "MSFT")
+                        {
+                            Debug.WriteLine($"Found {ticker}, breaking");
+
+                            state.Stop();
+
+                            return;
+                        }
+
+                        if (state.IsStopped) return;
+
+                        decimal result = CalculateExpensiveComputation(stocks);
+
+                        StockCalculation data = new StockCalculation
+                        {
+                            Ticker = ticker,
+                            Result = result
+                        };
+
+                        values.Add(data);
+
+                        Debug.WriteLine($"Completed processing {ticker}");
+                    });
+
+                Notes.Text = $"Ran to complation: {executionResult.IsCompleted}" + Environment.NewLine;
+                Notes.Text += $"Lowest break iteration: {executionResult.LowestBreakIteration}";
+
+                Stocks.ItemsSource = values.ToArray();
+            }
+            catch (Exception ex)
+            {
+                Notes.Text += ex.Message + Environment.NewLine;
+            }
+            finally
+            {
+                cancellationTokenSource = null;
+            }
+
+            #region After stock data is loaded
+            StocksStatus.Text = $"Loaded stocks for {Ticker.Text} in {watch.ElapsedMilliseconds}ms";
+            StockProgress.Visibility = Visibility.Hidden;
+            Search.Content = "Search";
+            #endregion
+        }
+
+        #endregion
 
         #region Invoke operations in parallel
 
