@@ -1,6 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using StockAnalyzer.Core;
+using StockAnalyzer.Core.Domain;
 
 namespace StockAnalyzer.Web.Controllers
 {
@@ -13,30 +17,14 @@ namespace StockAnalyzer.Web.Controllers
             return View();
         }
 
-
-
-
-
         [Route("Stock/{ticker}")]
         public async Task<ActionResult> Stock(string ticker)
         {
-            if (string.IsNullOrWhiteSpace(ticker)) ticker = "MSFT";
+            DataStore store = new DataStore();
 
-            ViewBag.Title = $"Stock Details for {ticker}";
+            Dictionary<string, IEnumerable<StockPrice>> data = await store.LoadStocks().ConfigureAwait(false);
 
-            var store = new DataStore();
-
-            var data = await store.LoadStocks();
-
-            return View(data[ticker]);
+            return !data.ContainsKey(ticker) ? null : View(data[ticker]);
         }
-
-
-
-
-
-
-
-
     }
 }
