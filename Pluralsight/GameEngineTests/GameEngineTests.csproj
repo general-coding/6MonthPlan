@@ -57,6 +57,8 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Assembly.cs" />
+    <Compile Include="CustomAsserts.cs" />
+    <Compile Include="CustomCategories.cs" />
     <Compile Include="DamageData.cs" />
     <Compile Include="EnemyFactoryShould.cs" />
     <Compile Include="ExternalHealthDamageTestData.cs" />
