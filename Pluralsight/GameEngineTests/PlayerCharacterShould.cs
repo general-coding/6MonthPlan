@@ -36,15 +36,20 @@ namespace GameEngine.Test
             Assert.AreEqual(100, player.Health);
         }
 
-        [TestMethod()]
         [TestCategory("Player Health")]
-        public void TakeDamageTest()
+        [DataTestMethod()]
+        [DataRow(1, 99)]
+        [DataRow(0, 100)]
+        [DataRow(100, 1)]
+        [DataRow(101, 1)]
+        [DataRow(50, 50)]
+        public void TakeDamageTest(int damage, int expectedHealth)
         {
             PlayerCharacter player = new PlayerCharacter();
 
-            player.TakeDamage(1);
+            player.TakeDamage(damage);
 
-            Assert.AreEqual(99, player.Health);
+            Assert.AreEqual(expectedHealth, player.Health);
         }
 
         [TestMethod()]
