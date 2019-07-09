@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 
-namespace GameEngine.Tests
+namespace GameEngine.Test
 {
     public class PlayerDefaultsAttribute : TestCategoryBaseAttribute
     {

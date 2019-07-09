@@ -20,27 +20,27 @@ namespace GameEngine.Test
         }
 
         [TestMethod()]
-        [TestCategory("Player Defaults")]
+        [PlayerDefaults]
         public void BeInexperiencedWhenNew()
         {
             Assert.IsTrue(player.IsNoob);
         }
 
         [TestMethod()]
-        [TestCategory("Player Defaults")]
+        [PlayerDefaults]
         public void NotHaveNickNameByDefault()
         {
             Assert.IsNull(player.Nickname);
         }
 
         [TestMethod()]
-        [TestCategory("Player Defaults")]
+        [PlayerDefaults]
         public void StartWithDefaultHealth()
         {
             Assert.AreEqual(100, player.Health);
         }
 
-        [TestCategory("Player Health")]
+        [PlayerHealth]
         [DataTestMethod()]
 
         [DynamicData(nameof(ExternalHealthDamageTestData.TestData)
@@ -53,7 +53,7 @@ namespace GameEngine.Test
         }
 
         [TestMethod()]
-        [TestCategory("Player Health")]
+        [PlayerHealth]
         public void TakeDamageTest_NotEqual()
         {
             player.TakeDamage(1);
@@ -62,7 +62,7 @@ namespace GameEngine.Test
         }
 
         [TestMethod()]
-        [TestCategory("Player Health")]
+        [PlayerHealth]
         [TestCategory("Another Category")]
         public void IncreaseHealthAfterSleeping()
         {
