@@ -8,6 +8,8 @@ namespace GameEngine.Test
     public class PlayerCharacterShould
     {
         [TestMethod()]
+        [TestCategory("Player Defaults")]
+        //[Ignore]
         public void BeInexperiencedWhenNew()
         {
             PlayerCharacter player = new PlayerCharacter();
@@ -16,6 +18,8 @@ namespace GameEngine.Test
         }
 
         [TestMethod()]
+        [TestCategory("Player Defaults")]
+        //[Ignore("Temporarily disable for refactoring")]
         public void NotHaveNickNameByDefault()
         {
             PlayerCharacter player = new PlayerCharacter();
@@ -24,6 +28,7 @@ namespace GameEngine.Test
         }
 
         [TestMethod()]
+        [TestCategory("Player Defaults")]
         public void StartWithDefaultHealth()
         {
             PlayerCharacter player = new PlayerCharacter();
@@ -32,6 +37,7 @@ namespace GameEngine.Test
         }
 
         [TestMethod()]
+        [TestCategory("Player Health")]
         public void TakeDamageTest()
         {
             PlayerCharacter player = new PlayerCharacter();
@@ -42,6 +48,7 @@ namespace GameEngine.Test
         }
 
         [TestMethod()]
+        [TestCategory("Player Health")]
         public void TakeDamageTest_NotEqual()
         {
             PlayerCharacter player = new PlayerCharacter();
@@ -52,6 +59,8 @@ namespace GameEngine.Test
         }
 
         [TestMethod()]
+        [TestCategory("Player Health")]
+        [TestCategory("Another Category")]
         public void IncreaseHealthAfterSleeping()
         {
             PlayerCharacter player = new PlayerCharacter();
