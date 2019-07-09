@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -36,13 +37,55 @@ namespace GameEngine.Test
             Assert.AreEqual(100, player.Health);
         }
 
+        public static IEnumerable<object[]> Damages
+        {
+            get
+            {
+                return new List<object[]>
+                {
+                    new object[] { 1, 99},
+                    new object[] { 0, 100 },
+                    new object[] { 100, 1 },
+                    new object[] { 101, 1 },
+                    new object[] { 50, 50 },
+                    new object[] { 40, 60 }
+                };
+            }
+        }
+
+        public static IEnumerable<object[]> GetDamages()
+        {
+            return new List<object[]>
+                {
+                    new object[] { 1, 99},
+                    new object[] { 0, 100 },
+                    new object[] { 100, 1 },
+                    new object[] { 101, 1 },
+                    new object[] { 50, 50 },
+                    new object[] { 10, 90 }
+                };
+        }
+
         [TestCategory("Player Health")]
         [DataTestMethod()]
-        [DataRow(1, 99)]
-        [DataRow(0, 100)]
-        [DataRow(100, 1)]
-        [DataRow(101, 1)]
-        [DataRow(50, 50)]
+
+        //Allows using a data preparer class
+        [DynamicData(nameof(DamageData.GetDamages)
+                    , typeof(DamageData)
+                    , DynamicDataSourceType.Method)]
+
+        //Allows us to choose the property (class property)
+        //of the test data
+        //[DynamicData(nameof(Damages))]
+
+        //Allows us to choose the class method that prepares the test data
+        //[DynamicData(nameof(GetDamages), DynamicDataSourceType.Method)]
+
+        //[DataRow(1, 99)]
+        //[DataRow(0, 100)]
+        //[DataRow(100, 1)]
+        //[DataRow(101, 1)]
+        //[DataRow(50, 50)]
         public void TakeDamageTest(int damage, int expectedHealth)
         {
             PlayerCharacter player = new PlayerCharacter();

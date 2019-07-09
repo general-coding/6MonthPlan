@@ -57,6 +57,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Assembly.cs" />
+    <Compile Include="DamageData.cs" />
     <Compile Include="EnemyFactoryShould.cs" />
     <Compile Include="Lifecycle.cs" />
     <Compile Include="PlayerCharacterShould.cs" />
