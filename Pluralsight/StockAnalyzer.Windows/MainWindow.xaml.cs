@@ -326,7 +326,7 @@ namespace StockAnalyzer.Windows
             {
                 string[] tickers = Ticker.Text.Split(',', ' ');
 
-                StockService stockService = new StockService();
+                MockStockService stockService = new MockStockService();
 
                 List<Task<IEnumerable<StockPrice>>> tickerLoadingTasks = new List<Task<IEnumerable<StockPrice>>>();
 
