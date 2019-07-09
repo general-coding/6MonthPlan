@@ -337,10 +337,23 @@ namespace StockAnalyzer.Windows
                     tickerLoadingTasks.Add(loadTask);
                 }
 
-                //Wait for all the stock prices to be listed
-                IEnumerable<StockPrice>[] allStocks = await Task.WhenAll(tickerLoadingTasks);
+                //Add a delay
+                Task timeoutTask = Task.Delay(2000);
 
-                Stocks.ItemsSource = allStocks.SelectMany(stocks => stocks);
+                //Wait for all the stock prices to be listed
+                Task<IEnumerable<StockPrice>[]> allStocksLoadingTask = Task.WhenAll(tickerLoadingTasks);
+
+                //Returns the task that completed execution, of the list of Tasks
+                Task completedTask = await Task.WhenAny(timeoutTask, allStocksLoadingTask);
+
+                if (completedTask == timeoutTask)
+                {
+                    cancellationTokenSource.Cancel();
+                    cancellationTokenSource = null;
+                    throw new Exception("Timeout!");
+                }
+
+                Stocks.ItemsSource = allStocksLoadingTask.Result.SelectMany(stocks => stocks);
             }
             catch (Exception ex)
             {
