@@ -324,11 +324,23 @@ namespace StockAnalyzer.Windows
 
             try
             {
+                string[] tickers = Ticker.Text.Split(',', ' ');
+
                 StockService stockService = new StockService();
 
-                IEnumerable<StockPrice> data = await stockService.GetStockPricesFor(Ticker.Text, cancellationTokenSource.Token);
+                List<Task<IEnumerable<StockPrice>>> tickerLoadingTasks = new List<Task<IEnumerable<StockPrice>>>();
 
-                Stocks.ItemsSource = data;
+                foreach (string ticker in tickers)
+                {
+                    Task<IEnumerable<StockPrice>> loadTask = stockService.GetStockPricesFor(ticker
+                                                        , cancellationTokenSource.Token);
+                    tickerLoadingTasks.Add(loadTask);
+                }
+
+                //Wait for all the stock prices to be listed
+                IEnumerable<StockPrice>[] allStocks = await Task.WhenAll(tickerLoadingTasks);
+
+                Stocks.ItemsSource = allStocks.SelectMany(stocks => stocks);
             }
             catch (Exception ex)
             {
