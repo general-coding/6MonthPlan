@@ -18,7 +18,10 @@ namespace Pluralsight.ConcurrentCollections.ConcurrentQueueDemo
             //DemoConcurrentStack();
 
             //concurrent bag
-            DemoConcurrentBag();
+            //DemoConcurrentBag();
+
+            //interface
+            DemoInterface();
         }
 
         private static void DemoQueue()
@@ -126,6 +129,30 @@ namespace Pluralsight.ConcurrentCollections.ConcurrentQueueDemo
             success = shirts.TryPeek(out string item2);
             if (success)
                 Console.WriteLine("Peeking   " + item2);
+            else
+                Console.WriteLine("queue was empty");
+
+            Console.WriteLine("\r\nEnumerating:");
+            foreach (string item in shirts)
+                Console.WriteLine(item);
+
+            Console.WriteLine("\r\nAfter enumerating, count = " + shirts.Count.ToString());
+        }
+
+        private static void DemoInterface()
+        {
+            // can change this to concurrent stack or bag
+            IProducerConsumerCollection<string> shirts = new ConcurrentQueue<string>();
+            shirts.TryAdd("Pluralsight");
+            shirts.TryAdd("WordPress");
+            shirts.TryAdd("Code School");
+
+            Console.WriteLine("After enqueuing, count = " + shirts.Count.ToString());
+
+            // = shirts.Dequeue();
+            bool success = shirts.TryTake(out string item1);
+            if (success)
+                Console.WriteLine("\r\nRemoving " + item1);
             else
                 Console.WriteLine("queue was empty");
 
