@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -9,9 +9,9 @@ namespace Pluralsight.ConcurrentCollections.SubmitOrders
     {
         public static void Main(string[] args)
         {
-            Queue<string> orders = new Queue<string>();
+            ConcurrentQueue<string> orders = new ConcurrentQueue<string>();
             //PlaceOrders(orders, "Mark");
-            //PlaceOrders(orders, "Ramdevi");  
+            //PlaceOrders(orders, "Ramdevi");
 
             //Multithreading the place orders
             Task task1 = Task.Run(() => PlaceOrders(orders, "Mark"));
@@ -24,7 +24,7 @@ namespace Pluralsight.ConcurrentCollections.SubmitOrders
             Console.Read();
         }
 
-        public static void PlaceOrders(Queue<string> orders, string customerName)
+        public static void PlaceOrders(ConcurrentQueue<string> orders, string customerName)
         {
             for (int i = 0; i < 5; i++)
             {
