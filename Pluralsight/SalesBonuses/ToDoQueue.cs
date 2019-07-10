@@ -5,48 +5,43 @@ using System.Threading;
 namespace Pluralsight.ConcurrentCollections.SalesBonuses
 {
     public class ToDoQueue
-	{
-		private readonly ConcurrentQueue<Trade> _queue = new ConcurrentQueue<Trade>();
-		private bool _workingDayComplete = false;
-		private readonly StaffLogsForBonuses _staffLogs;
+    {
+        private readonly BlockingCollection<Trade> _queue
+            = new BlockingCollection<Trade>(new ConcurrentQueue<Trade>());
+        private readonly StaffLogsForBonuses _staffLogs;
 
-		public ToDoQueue(StaffLogsForBonuses staffResults)
-		{
-			_staffLogs = staffResults;
-		}
+        public ToDoQueue(StaffLogsForBonuses staffResults)
+        {
+            _staffLogs = staffResults;
+        }
 
-		public void AddTrade(Trade transaction)
-		{
-			_queue.Enqueue(transaction);
-		}
+        public void AddTrade(Trade transaction)
+        {
+            _queue.Add(transaction);
+        }
 
-		public void CompleteAdding()
-		{
-			_workingDayComplete = true;
-		}
+        public void CompleteAdding()
+        {
+            //Tells the BlockingCollection that no more items to add
+            _queue.CompleteAdding();
+        }
 
-		public void MonitorAndLogTrades()
-		{
-			while (true)
-			{
-				Trade nextTrade;
-				bool done = _queue.TryDequeue(out nextTrade);
-				if (done)
-				{
-					_staffLogs.ProcessTrade(nextTrade);
-					Console.WriteLine("Processing transaction from " + nextTrade.Person.Name);
-				}
-				else if (_workingDayComplete)
-				{
-					Console.WriteLine("No more sales to log - exiting");
-					return;
-				}
-				else
-				{
-					Console.WriteLine("No transactions available");
-					Thread.Sleep(500);
-				}
-			}
-		}
-	}
+        public void MonitorAndLogTrades()
+        {
+            while (true)
+            {
+                try
+                {
+                    Trade nextTransaction = _queue.Take();
+                    _staffLogs.ProcessTrade(nextTransaction);
+                    Console.WriteLine("Processing transaction from " + nextTransaction.Person.Name);
+                }
+                catch (InvalidOperationException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return;
+                }
+            }
+        }
+    }
 }
