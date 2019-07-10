@@ -164,6 +164,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SubmitOrders", "SubmitOrder
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicDictionaryOps", "BasicDictionaryOps\BasicDictionaryOps.csproj", "{C312CE73-35F5-4174-902E-F5B24F74F267}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuyAndSell", "BuyAndSell\BuyAndSell.csproj", "{5CA30C17-DDCF-46C1-8F17-4606936FDAA7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -702,6 +704,14 @@ Global
 		{C312CE73-35F5-4174-902E-F5B24F74F267}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C312CE73-35F5-4174-902E-F5B24F74F267}.Release|x86.ActiveCfg = Release|Any CPU
 		{C312CE73-35F5-4174-902E-F5B24F74F267}.Release|x86.Build.0 = Release|Any CPU
+		{5CA30C17-DDCF-46C1-8F17-4606936FDAA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5CA30C17-DDCF-46C1-8F17-4606936FDAA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5CA30C17-DDCF-46C1-8F17-4606936FDAA7}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5CA30C17-DDCF-46C1-8F17-4606936FDAA7}.Debug|x86.Build.0 = Debug|Any CPU
+		{5CA30C17-DDCF-46C1-8F17-4606936FDAA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5CA30C17-DDCF-46C1-8F17-4606936FDAA7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5CA30C17-DDCF-46C1-8F17-4606936FDAA7}.Release|x86.ActiveCfg = Release|Any CPU
+		{5CA30C17-DDCF-46C1-8F17-4606936FDAA7}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
