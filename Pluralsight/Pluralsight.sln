@@ -168,6 +168,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuyAndSell", "BuyAndSell\Bu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConcurrentQueueDemo", "ConcurrentQueueDemo\ConcurrentQueueDemo.csproj", "{BA486FE5-3DF9-4208-BE72-0FB126FD1ADD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalesBonuses", "SalesBonuses\SalesBonuses.csproj", "{5C56EAD1-0086-4B67-9960-D8246115CCC3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -722,6 +724,14 @@ Global
 		{BA486FE5-3DF9-4208-BE72-0FB126FD1ADD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BA486FE5-3DF9-4208-BE72-0FB126FD1ADD}.Release|x86.ActiveCfg = Release|Any CPU
 		{BA486FE5-3DF9-4208-BE72-0FB126FD1ADD}.Release|x86.Build.0 = Release|Any CPU
+		{5C56EAD1-0086-4B67-9960-D8246115CCC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C56EAD1-0086-4B67-9960-D8246115CCC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C56EAD1-0086-4B67-9960-D8246115CCC3}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5C56EAD1-0086-4B67-9960-D8246115CCC3}.Debug|x86.Build.0 = Debug|Any CPU
+		{5C56EAD1-0086-4B67-9960-D8246115CCC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C56EAD1-0086-4B67-9960-D8246115CCC3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C56EAD1-0086-4B67-9960-D8246115CCC3}.Release|x86.ActiveCfg = Release|Any CPU
+		{5C56EAD1-0086-4B67-9960-D8246115CCC3}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
