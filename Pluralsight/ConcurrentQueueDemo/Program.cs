@@ -22,6 +22,8 @@ namespace Pluralsight.ConcurrentCollections.ConcurrentQueueDemo
 
             //interface
             DemoInterface();
+
+            Console.Read();
         }
 
         private static void DemoQueue()
