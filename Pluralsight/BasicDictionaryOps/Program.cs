@@ -45,7 +45,7 @@ namespace Pluralsight.ConcurrentCollections.BasicDictionaryOps
         
         private static void EndOfModule()
         {
-            var stock = new ConcurrentDictionary<string, int>();
+            ConcurrentDictionary<string, int> stock = new ConcurrentDictionary<string, int>();
             stock.TryAdd("jDays", 4);
             stock.TryAdd("technologyhour", 3);
             Console.WriteLine(string.Format("No. of shirts in stock = {0}", stock.Count));
@@ -63,13 +63,12 @@ namespace Pluralsight.ConcurrentCollections.BasicDictionaryOps
 
             Console.WriteLine(string.Format("stock[pluralsight] = {0}", stock.GetOrAdd("pluralsight", 0)));
 
-            int jDaysValue;
-            success = stock.TryRemove("jDays", out jDaysValue);
+            success = stock.TryRemove("jDays", out int jDaysValue);
             if (success)
                 Console.WriteLine("value removed was: " + jDaysValue);
 
             Console.WriteLine("\r\nEnumerating:");
-            foreach (var keyValPair in stock)
+            foreach (KeyValuePair<string, int> keyValPair in stock)
             {
                 Console.WriteLine("{0}: {1}", keyValPair.Key, keyValPair.Value);
             }
