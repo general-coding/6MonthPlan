@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using People.Service.Models;
-using PersonRepository.Interface;
+using PeopleViewer.Common;
 using System.Collections.Generic;
 using System.Linq;
 

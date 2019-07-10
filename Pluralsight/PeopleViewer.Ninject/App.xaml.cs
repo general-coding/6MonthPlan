@@ -1,6 +1,7 @@
 ﻿using Ninject;
-using PersonRepository.CSV;
-using PersonRepository.Interface;
+using PeopleViewer.Common;
+using PersonDataReader.Decorators;
+using PersonDataReader.Service;
 using System.Windows;
 
 namespace PeopleViewer.Ninject
@@ -12,11 +13,22 @@ namespace PeopleViewer.Ninject
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-
-            Container.Bind<IPersonRepository>().To<CSVRepository>();
-            Application.Current.MainWindow = Container.Get<MainWindow>();
-
+            ConfigureContainer();
+            ComposeObjects();
+            Application.Current.MainWindow.Title = "With Dependency Injection - Ninject";
             Application.Current.MainWindow.Show();
+        }
+
+        private void ConfigureContainer()
+        {
+            Container.Bind<IPersonReader>().To<CachingReader>()
+                .InSingletonScope()
+                .WithConstructorArgument<IPersonReader>(Container.Get<ServiceReader>());
+        }
+
+        private void ComposeObjects()
+        {
+            Application.Current.MainWindow = Container.Get<PeopleViewerWindow>();
         }
     }
 }

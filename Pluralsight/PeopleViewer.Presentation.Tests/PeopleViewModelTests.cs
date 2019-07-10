@@ -1,27 +1,17 @@
-﻿using Moq;
-using NUnit.Framework;
-using PersonRepository.Interface;
-using System.Collections.Generic;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 
 namespace PeopleViewer.Presentation.Tests
 {
+    [TestClass]
     public class PeopleViewModelTests
     {
-        private IPersonRepository GetTestRepository()
-        {
-            List<Person> testPeople = TestData.testPeople;
-            var mockRepo = new Mock<IPersonRepository>();
-            mockRepo.Setup(r => r.GetPeople()).Returns(testPeople);
-            return mockRepo.Object;
-        }
-
-        [Test]
-        public void RefreshPeople_OnExecute_PeopleIsPopulated()
+        [TestMethod()]
+        public void People_OnRefreshPeople_IsPopulated()
         {
             // Arrange
-            var repository = GetTestRepository();
-            var viewModel = new PeopleViewModel(repository);
+            FakeReader reader = new FakeReader();
+            PeopleViewModel viewModel = new PeopleViewModel(reader);
 
             // Act
             viewModel.RefreshPeople();
@@ -31,20 +21,21 @@ namespace PeopleViewer.Presentation.Tests
             Assert.AreEqual(2, viewModel.People.Count());
         }
 
-        [Test]
-        public void ClearPeople_OnExecute_PeopleIsEmpty()
+        [TestMethod]
+        public void People_OnClearPeople_IsEmpty()
         {
             // Arrange
-            var repository = GetTestRepository();
-            var vm = new PeopleViewModel(repository);
-            vm.RefreshPeople();
-            Assert.AreEqual(2, vm.People.Count(), "Invalid Arrangement");
+            FakeReader reader = new FakeReader();
+            PeopleViewModel viewModel = new PeopleViewModel(reader);
+            viewModel.RefreshPeople();
+            Assert.AreNotEqual(0, viewModel.People.Count(),
+                "Invalid arrange");
 
             // Act
-            vm.ClearPeople();
+            viewModel.ClearPeople();
 
             // Assert
-            Assert.AreEqual(0, vm.People.Count());
+            Assert.AreEqual(0, viewModel.People.Count());
         }
     }
 }

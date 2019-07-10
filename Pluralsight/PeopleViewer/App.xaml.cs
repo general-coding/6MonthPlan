@@ -1,25 +1,32 @@
 ﻿using PeopleViewer.Presentation;
-using PersonRepository.Caching;
-using PersonRepository.Service;
+using PersonDataReader.Decorators;
+using PersonDataReader.Service;
 using System.Windows;
 
 namespace PeopleViewer
 {
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
     public partial class App : Application
     {
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+            ComposeObjects();
+            Current.MainWindow.Title = "With Dependency Injection";
+            Current.MainWindow.Show();
+        }
 
-            var wrappedRepository = new ServiceRepository();
-            var repository = new CachingRepository(wrappedRepository);
-            var viewModel = new PeopleViewModel(repository);
+        private static void ComposeObjects()
+        {
+            //ServiceReader reader = new ServiceReader();
 
-            Application.Current.MainWindow = new MainWindow(viewModel);
-            Application.Current.MainWindow.Show();
+            //CSVReader reader = new CSVReader();
+
+            //SQLReader reader = new SQLReader();
+
+            ServiceReader wrapperReader = new ServiceReader();
+            CachingReader reader = new CachingReader(wrapperReader);
+            PeopleViewModel viewModel = new PeopleViewModel(reader);
+            Current.MainWindow = new PeopleViewerWindow(viewModel);
         }
     }
 }

@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PersonRepository.Service\PersonRepository.Service.csproj" />
+    <ProjectReference Include="..\PersonDataReader.Service\PersonDataReader.Service.csproj" />
   </ItemGroup>
 
 </Project>

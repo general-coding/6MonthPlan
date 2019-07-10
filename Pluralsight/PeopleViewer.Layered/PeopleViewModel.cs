@@ -1,5 +1,4 @@
-﻿using PersonRepository.Factory;
-using PersonRepository.Interface;
+﻿using PeopleViewer.Common;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -8,38 +7,41 @@ namespace PeopleViewer
 {
     public class PeopleViewModel : INotifyPropertyChanged
     {
-        private IPersonReader repository;
+        protected IPersonReader DataReader;
 
-        public PeopleViewModel()
-        {
-            repository = RepositoryFactory.GetRepository();
-        }
-
-        private IEnumerable<Person> people;
+        private IEnumerable<Person> _people;
         public IEnumerable<Person> People
         {
-            get { return people; }
+            get { return _people; }
             set
             {
-                people = value;
+                if (_people == value)
+                    return;
+                _people = value;
                 RaisePropertyChanged();
             }
         }
 
-        public void FetchData()
+        public PeopleViewModel(IPersonReader dataReader)
         {
-            People = repository.GetPeople();
+            DataReader = dataReader;
         }
 
-        public void ClearData()
+        public void RefreshPeople()
+        {
+            People = DataReader.GetPeople();
+        }
+
+        public void ClearPeople()
         {
             People = new List<Person>();
         }
 
-        public string RepositoryType
+        public string DataReaderType
         {
-            get { return repository.GetType().ToString(); }
+            get { return DataReader.GetType().ToString(); }
         }
+
 
         #region INotifyPropertyChanged Members
 

@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>PeopleViewer</RootNamespace>
     <AssemblyName>PeopleViewer</AssemblyName>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
@@ -16,6 +16,7 @@
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -188,13 +189,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PersonRepository.Factory\PersonRepository.Factory.csproj">
-      <Project>{e1f5a4d6-c6e9-45e0-91e8-06f104ee1894}</Project>
-      <Name>PersonRepository.Factory</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\PersonRepository.Interface\PersonRepository.Interface.csproj">
-      <Project>{97b4a8a4-2354-4ce7-8bff-435a1406e97e}</Project>
-      <Name>PersonRepository.Interface</Name>
+    <ProjectReference Include="..\PeopleViewer.Common\PeopleViewer.Common.csproj">
+      <Project>{FA72D8F3-0BCF-464E-9D44-71542318ADA0}</Project>
+      <Name>PeopleViewer.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -182,21 +182,6 @@
             <Setter Property="HorizontalAlignment" Value="Right"/>
         </Style>
 
-        <!-- Radio Button / Checkbox Styles -->
-        <Style TargetType="RadioButton">
-            <Setter Property="Foreground" Value="{StaticResource ApplicationTextForeground}"/>
-            <Setter Property="FontSize" Value="18"/>
-            <Setter Property="Padding" Value="5,-2,0,0"/>
-            <Setter Property="Margin" Value="3"/>
-        </Style>
-
-        <Style TargetType="CheckBox">
-            <Setter Property="Foreground" Value="{StaticResource ApplicationTextForeground}"/>
-            <Setter Property="FontSize" Value="18"/>
-            <Setter Property="Padding" Value="5,-2,0,0"/>
-            <Setter Property="Margin" Value="3"/>
-        </Style>
-
         <!-- List Box Data Template -->
         <DataTemplate x:Key="PersonListTemplate">
             <Border BorderBrush="Black"
@@ -207,8 +192,8 @@
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -218,7 +203,7 @@
                         <TextBlock Text="{Binding}" 
                                    Style="{StaticResource ListItemTextStyle}" />
                     </StackPanel>
-                    <StackPanel Grid.Row="1" Grid.Column="1">
+                    <StackPanel Grid.Row="2" Grid.Column="1">
                         <TextBlock Text="{Binding StartDate.Year}"
                                    Style="{StaticResource ListTextStyle}" />
                         <TextBlock Text="{Binding Rating,

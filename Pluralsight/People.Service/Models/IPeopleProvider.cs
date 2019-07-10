@@ -1,4 +1,4 @@
-﻿using PersonRepository.Interface;
+﻿using PeopleViewer.Common;
 using System.Collections.Generic;
 
 namespace People.Service.Models
